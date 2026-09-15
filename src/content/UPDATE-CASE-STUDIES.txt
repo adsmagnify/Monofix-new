@@ -1,0 +1,32 @@
+CASE STUDIES — edit this file, not the React components
+=======================================================
+
+FILES
+-----
+  src/content/casestudies.json     titles, tags, rotate, highlight
+  public/casestudies/              drop-in images
+
+Then deploy (same as home banners / client quotes). No code change.
+
+WHAT SHOWS
+----------
+• "show"            how many cards on the homepage
+• "active": true    include this case
+• "active": false   park it for later
+• "highlight": true featured card (lime) — use on ONE item
+• "order"           top-to-bottom / left-to-right
+• "accent"          "blue" | "lime" | "pink" | "navy"
+• "area"            the small tag (NPD, Sustainability, etc.)
+• "image"           e.g. "/casestudies/egypt-audit.jpg"
+                    Put the file in public/casestudies/ with that name.
+                    Leave "" if there is no picture yet.
+• "href"            optional link to a longer write-up
+
+HOW TO ROTATE
+1. Set the outgoing case "active": false
+2. Add a new item (or turn an old one back on)
+3. Set "order", "accent", "area", and optionally "image"
+4. Deploy
+
+HOW TO HIGHLIGHT
+Set "highlight": true on that item, false on the others.

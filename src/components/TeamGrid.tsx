@@ -9,46 +9,56 @@ function chips(value: string) {
     .filter(Boolean);
 }
 
-function TeamProfile({ person }: { person: Person }) {
+function PersonDetails({ person }: { person: Person }) {
   const tags = [...chips(person.sectors), ...chips(person.companies)];
 
   return (
-    <article className="rounded-3xl border-l-4 border-lime bg-white p-10 sm:p-12">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-        <p className="font-display text-sm text-blue">0{person.listOrder}</p>
-        <a
-          href={person.linkedin}
-          target="_blank"
-          rel="noreferrer"
-          className="cursor-pointer text-sm font-medium text-navy underline-offset-4 hover:text-blue hover:underline"
-        >
-          LinkedIn
-        </a>
-      </div>
-      <h3 className="font-display mt-3 text-3xl leading-tight text-ink">{person.name}</h3>
-      <p className="mt-4 text-base leading-relaxed text-slate">{person.summary}</p>
+    <>
+      <p className="text-sm leading-relaxed text-slate sm:text-base">{person.summary}</p>
       {tags.length > 0 ? (
-        <ul className="mt-5 flex flex-wrap gap-2">
+        <ul className="mt-2 flex flex-wrap gap-1.5">
           {tags.map((tag) => (
-            <li key={tag} className="rounded-full bg-mist px-3 py-1.5 text-sm font-medium text-navy">
+            <li key={tag} className="rounded-full bg-mist px-2.5 py-1 text-xs font-medium text-navy">
               {tag}
             </li>
           ))}
         </ul>
       ) : null}
-      {person.credential ? (
-        <p className="mt-5 text-sm font-semibold tracking-[0.14em] text-blue uppercase">{person.credential}</p>
-      ) : null}
-    </article>
+    </>
+  );
+}
+
+export function TeamPeopleList() {
+  return (
+    <ul className="grid gap-3">
+      {teamList.map((person) => (
+        <li
+          key={person.name}
+          className="grid gap-2 rounded-2xl border-l-4 border-lime bg-white px-5 py-4 sm:px-6 lg:grid-cols-[16rem_1fr] lg:items-start lg:gap-8"
+        >
+          <div>
+            <p className="font-display text-xl leading-tight text-ink sm:text-2xl">{person.listName}</p>
+            {person.credential ? (
+              <p className="mt-1 text-xs font-semibold tracking-[0.14em] text-blue uppercase">{person.credential}</p>
+            ) : null}
+            <a
+              href={person.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 inline-block text-sm font-medium text-navy underline-offset-4 hover:text-blue hover:underline"
+            >
+              LinkedIn
+            </a>
+          </div>
+          <div>
+            <PersonDetails person={person} />
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }
 
 export function TeamGrid() {
-  return (
-    <div className="grid gap-8 sm:grid-cols-2">
-      {teamList.map((person) => (
-        <TeamProfile key={person.name} person={person} />
-      ))}
-    </div>
-  );
+  return <TeamPeopleList />;
 }

@@ -5,13 +5,13 @@ import { site } from "@/content/site";
 
 export const metadata = {
   title: "Contact us",
-  description: "Let's start something new. MONOFIX responds within 24 hours.",
+  description: "Get in touch… we respond within 24 hours, or earlier.",
 };
 
 export default function ContactPage() {
   return (
     <>
-      <PageHero kicker="Contact us" title="Let's start something new!" lead={site.responseTime} />
+      <PageHero kicker="Contact us" title="Get in touch…" lead="we respond within 24 hours, or earlier." />
       <section className="mx-auto grid max-w-[1400px] gap-16 px-6 py-24 sm:px-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:px-16 lg:py-32">
         <div className="grid gap-6">
           <div>

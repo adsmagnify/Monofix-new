@@ -23,7 +23,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   return (
     <>
-      <PageHero kicker={`Vertical ${service.number}`} title={service.title} lead={service.short} />
+      <PageHero kicker={service.number} title={service.title} lead={service.short} />
       <section className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32">
         <p className="max-w-3xl text-xl leading-relaxed text-slate">{service.body}</p>
         <ul className="mt-12 grid gap-6 sm:grid-cols-2">

@@ -1,0 +1,39 @@
+HOME PAGE BANNERS — drop-in folder
+==================================
+
+This folder powers the full-screen home carousel.
+
+Current loop (keep these names if you only want to SWAP the picture):
+  one-carousel.jpg
+  twoo-carousel.png
+  three-carousel.png
+  four-carousel.png
+  five-carousel.png
+  six-carousel.png
+
+HOW TO CHANGE A BANNER (festival / topical / daily)
+---------------------------------------------------
+1. Make a 16:9 image, at least 1920×1080 (wider is fine).
+2. Save it with the SAME filename as the slide you want to replace
+   (example: overwrite one-carousel.jpg with today’s Diwali visual).
+3. Send the file to AdsMagnify / drop it into this folder and deploy.
+   The site picks it up on the next publish — no code change.
+
+HOW TO ADD A NEW SLIDE
+----------------------
+Drop another image into THIS folder (not into extra/).
+Name it so it sorts after six, for example:
+  07-diwali.jpg
+  08-independence-day.png
+
+The homepage reads every jpg/png/webp in this folder automatically.
+Do not put files inside extra/.
+Do not use the backup names that end with “carousell” (double L).
+
+TIPS
+----
+• Keep a consistent look with slides 1–6 (same crop, not much darker).
+• JPG or PNG both work. Prefer 16:9 so nothing is cropped oddly.
+• There is no public upload link yet. This folder IS the library.
+  A click-to-upload CMS can be added later if you want to change
+  banners without sending files to the developer.

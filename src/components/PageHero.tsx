@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { site } from "@/content/site";
 
 type PageHeroProps = {
   kicker: string;
@@ -25,7 +26,7 @@ export function CtaBand() {
       <div className="mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-8 px-6 py-16 sm:flex-row sm:items-center sm:px-10 lg:px-16">
         <div>
           <p className="font-display text-3xl text-ink sm:text-4xl">Let&apos;s start something new.</p>
-          <p className="mt-3 text-lg text-ink/80">Get in touch… responds within 24 hours.</p>
+          <p className="mt-3 text-lg text-ink/80">{site.responseTime}</p>
         </div>
         <Link
           href="/#contact"

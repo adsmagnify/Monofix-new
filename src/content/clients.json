@@ -1,0 +1,35 @@
+{
+  "show": 3,
+  "items": [
+    {
+      "id": "pack-shape",
+      "title": "Great new packaging design shape",
+      "quote": "The custom packaging shape developed by the MONOFIX team completely transformed our product's shelf presence and brand identity. Not only does it look stunning and modern, but the structural integrity is also outstanding. Our customers have noticed the upgrade, and our sales have seen a fantastic lift because of it.",
+      "role": "CMO at a Coffee major",
+      "active": true,
+      "highlight": false,
+      "accent": "blue",
+      "order": 1
+    },
+    {
+      "id": "cost-savings",
+      "title": "Major cost savings end-to-end",
+      "quote": "We brought in MONOFIX to audit our supply chain, and they delivered phenomenal end-to-end cost savings without compromising on quality. From material optimization to smarter pallet layouts, every adjustment they made improved our bottom line. They didn't just find quick fixes; they restructured our packaging efficiency for the long run.",
+      "role": "COO at a Leading Beverage Co",
+      "active": true,
+      "highlight": false,
+      "accent": "lime",
+      "order": 2
+    },
+    {
+      "id": "crisis-support",
+      "title": "Urgent & expert technical support during a crisis",
+      "quote": "When a major production line failure threatened to halt our holiday shipments, their team responded instantly with expert technical support. They quickly diagnosed the structural defect and guided our suppliers through an immediate, viable fix. Their calm professionalism and rapid troubleshooting saved us from a massive distribution disaster.",
+      "role": "Head R&D at a Global beauty conglomerate",
+      "active": true,
+      "highlight": false,
+      "accent": "pink",
+      "order": 3
+    }
+  ]
+}

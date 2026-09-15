@@ -6,7 +6,7 @@ export const site = {
   email: "sales@monofix.co.in",
   phone: "+91-9820026080",
   phoneHref: "tel:+919820026080",
-  responseTime: "Get in touch… responds within 24 hours",
+  responseTime: "Get in touch… we respond within 24 hours, or earlier.",
   address: {
     line1: "INNOV8 Solitaire Park",
     line2: "Andheri East, Mumbai 400093",
@@ -82,6 +82,7 @@ export const teamHighlights = [
   "Proven expertise of launching fresh Products and Brands from scratch.",
 ] as const;
 
+/** Home banners live in `public/home/`. Replace a file with the same name to swap a slide. */
 export const homeSlides = [
   {
     src: "/home/one-carousel.jpg",
@@ -106,18 +107,6 @@ export const homeSlides = [
   {
     src: "/home/six-carousel.png",
     alt: "Over 70 percent of consumers prefer sustainable packaging",
-  },
-  {
-    src: "/home/extra/seven-carousel.png",
-    alt: "MONOFIX home banner — packaging visual",
-  },
-  {
-    src: "/home/extra/eight-carousel.png",
-    alt: "MONOFIX home banner — packaging visual",
-  },
-  {
-    src: "/home/extra/Master-Image-01.png",
-    alt: "MONOFIX sustainable packaging — home banner",
   },
 ] as const;
 

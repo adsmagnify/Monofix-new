@@ -1,0 +1,36 @@
+CLIENT TESTIMONIALS — edit this file, not the React components
+==============================================================
+
+The homepage Clients section reads:
+  src/content/clients.json
+
+That JSON is the library. Add, hide, highlight or rotate quotes there.
+Then deploy (same as swapping a home banner). No code change.
+
+WHAT SHOWS ON THE SITE
+----------------------
+• "show": 3          → homepage always displays up to 3 cards
+• "active": true     → this quote is in the pool
+• "active": false    → keep it on file, but hide it (park for later)
+• "highlight": true  → featured card (lime, “Featured”) — use on ONE item
+• "order": 1, 2, 3   → left to right when none are highlighted
+• "accent": "blue" | "lime" | "pink" | "navy"
+                     → colour of the icon bar when not highlighted
+
+HOW TO ROTATE (swap which 3 are live)
+-------------------------------------
+1. Set the outgoing quote to "active": false
+2. Add a new item (or set an old one back to "active": true)
+3. Give it an "order" and an "accent"
+4. Deploy
+
+HOW TO HIGHLIGHT ONE STORY
+--------------------------
+Set "highlight": true on that item, and false on the others.
+The featured card goes first and uses the lime treatment.
+
+DO NOT
+------
+• Put personal names in "role" — keep job + company type
+  (e.g. "CMO at a Coffee major")
+• Change "show" above 3 unless you want more cards on the homepage

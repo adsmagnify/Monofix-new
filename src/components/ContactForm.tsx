@@ -4,7 +4,7 @@ import { FormEvent, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { services, site } from "@/content/site";
 
-export function ContactForm() {
+export function ContactForm({ compact = false }: { compact?: boolean }) {
   const params = useSearchParams();
   const region = params.get("region");
   const [sent, setSent] = useState(false);
@@ -44,71 +44,58 @@ export function ContactForm() {
   if (sent) {
     return (
       <p className="rounded-2xl bg-mist p-6 text-navy">
-        Thank you. Your mail client should open with the message for {site.email}. We respond within 24 hours.
+        Thank you. Your mail client should open with the message for {site.email}. We respond within 24 hours, or earlier.
       </p>
     );
   }
 
+  const field = compact
+    ? "rounded-xl border border-slate/20 bg-white px-4 py-3 text-base font-normal outline-none focus:border-blue"
+    : "rounded-xl border border-slate/20 bg-white px-4 py-4 text-base font-normal outline-none focus:border-blue";
+
   return (
-    <form onSubmit={onSubmit} className="grid gap-6">
+    <form onSubmit={onSubmit} className={compact ? "grid gap-4" : "grid gap-6"}>
       {regionNote ? (
         <p className="rounded-xl bg-lime/40 px-3 py-2 text-sm font-medium text-ink">{regionNote}</p>
       ) : null}
-      <label className="grid gap-1 text-sm font-medium">
-        Name
-        <input
-          name="name"
-          required
-          className="rounded-xl border border-slate/20 bg-white px-4 py-4 text-base font-normal outline-none focus:border-blue"
-        />
-      </label>
-      <label className="grid gap-1 text-sm font-medium">
-        Email address
-        <input
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          className="rounded-xl border border-slate/20 bg-white px-4 py-4 text-base font-normal outline-none focus:border-blue"
-        />
-      </label>
-      <label className="grid gap-1 text-sm font-medium">
-        Company
-        <input
-          name="company"
-          className="rounded-xl border border-slate/20 bg-white px-4 py-4 text-base font-normal outline-none focus:border-blue"
-        />
-      </label>
-      <label className="grid gap-1 text-sm font-medium">
-        Service interest
-        <select
-          name="service"
-          required
-          defaultValue=""
-          className="rounded-xl border border-slate/20 bg-white px-4 py-4 text-base font-normal outline-none focus:border-blue"
-        >
-          <option value="" disabled>
-            Select a vertical
-          </option>
-          {services.map((service) => (
-            <option key={service.slug} value={service.title}>
-              {service.title}
+      <div className={compact ? "grid gap-4 sm:grid-cols-2" : "contents"}>
+        <label className="grid gap-1.5 text-sm font-medium">
+          Name
+          <input name="name" required className={field} />
+        </label>
+        <label className="grid gap-1.5 text-sm font-medium">
+          Email address
+          <input name="email" type="email" autoComplete="email" required className={field} />
+        </label>
+      </div>
+      <div className={compact ? "grid gap-4 sm:grid-cols-2" : "contents"}>
+        <label className="grid gap-1.5 text-sm font-medium">
+          Company
+          <input name="company" className={field} />
+        </label>
+        <label className="grid gap-1.5 text-sm font-medium">
+          Service interest
+          <select name="service" required defaultValue="" className={field}>
+            <option value="" disabled>
+              Select a vertical
             </option>
-          ))}
-        </select>
-      </label>
-      <label className="grid gap-1 text-sm font-medium">
+            {services.map((service) => (
+              <option key={service.slug} value={service.title}>
+                {service.title}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <label className="grid gap-1.5 text-sm font-medium">
         Message
-        <textarea
-          name="message"
-          required
-          rows={5}
-          className="rounded-xl border border-slate/20 bg-white px-4 py-4 text-base font-normal outline-none focus:border-blue"
-        />
+        <textarea name="message" required rows={compact ? 4 : 5} className={field} />
       </label>
       <button
         type="submit"
-        className="mt-2 cursor-pointer rounded-full bg-ink px-8 py-4 text-base font-bold text-white hover:bg-navy"
+        className={`cursor-pointer rounded-full bg-ink font-bold text-white hover:bg-navy ${
+          compact ? "mt-1 px-8 py-3.5 text-base" : "mt-2 px-8 py-4 text-base"
+        }`}
       >
         Send message
       </button>

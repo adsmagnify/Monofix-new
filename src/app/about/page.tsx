@@ -1,20 +1,16 @@
 import { CtaBand, PageHero } from "@/components/PageHero";
-import { TeamGrid } from "@/components/TeamGrid";
+import { TeamPeopleList } from "@/components/TeamGrid";
 import { site, teamHighlights } from "@/content/site";
 
 export const metadata = {
   title: "About us",
-  description: "Top team of packaging and design specialists — Team MONOFIX.",
+  description: "Packaging & Design Specialists — MONOFIX Packaging Solutions.",
 };
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero
-        kicker="About us"
-        title="Top team of packaging & design specialists"
-        lead="Team MONOFIX"
-      />
+      <PageHero kicker="About us" title="Packaging & Design Specialists!" />
       <section className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32">
         <ul className="mb-12 max-w-3xl space-y-5 rounded-2xl bg-blue px-8 py-8 text-white sm:px-10 sm:py-10">
           {teamHighlights.map((point) => (
@@ -24,7 +20,7 @@ export default function AboutPage() {
             </li>
           ))}
         </ul>
-        <TeamGrid />
+        <TeamPeopleList />
         <div className="mt-16 rounded-3xl bg-navy p-10 text-white sm:p-12">
           <p className="text-lime">Headquarters</p>
           <p className="mt-4 text-lg font-medium leading-relaxed">

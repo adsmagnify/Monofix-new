@@ -1,0 +1,57 @@
+INSIGHTS, BLOGS, PRICES, IMAGES — edit these, not the React components
+======================================================================
+
+FILES
+-----
+  src/content/insights.json     blog / insight cards (rotate, highlight, links)
+  src/content/prices.json       PET / HDPE / PP / Kraft tiles
+  public/insights/              drop-in images for those cards
+
+Then deploy (same as home banners or client quotes). No code change.
+
+INSIGHT / BLOG CARDS  (insights.json)
+-------------------------------------
+• "show"            how many cards on the homepage (Insights page shows the same set)
+• "active": true    include this post
+• "active": false   park it for later
+• "highlight": true featured card (lime) — use on ONE item
+• "order"           left-to-right / top-to-bottom
+• "accent"          "blue" | "lime" | "pink" | "navy"
+• "image"           e.g. "/insights/greenwashing.jpg"
+                    Put the file in public/insights/ with that name.
+                    Leave "" if there is no picture yet.
+• "href"            optional link (your blog / article URL)
+• "linkedinUrl"     optional LinkedIn post URL — shows “View on LinkedIn”
+
+HOW TO ROTATE
+1. Set the outgoing card "active": false
+2. Add a new item (or turn an old one back on)
+3. Set "order", "accent", and optionally "image"
+4. Deploy
+
+HOW TO HIGHLIGHT
+Set "highlight": true on that item, false on the others.
+
+LIVE MATERIAL PRICES  (prices.json)
+-----------------------------------
+Paste the source URL into "sourceUrl" when you have it.
+Until then the tile stays as a label only.
+When the URL is in, the tile becomes a clickable link.
+A live number-pull can be wired once those pages are known
+(each source formats prices differently).
+
+LINKEDIN / SOCIAL — what is possible
+------------------------------------
+LinkedIn does not let a website scrape company posts.
+Official company-page APIs need LinkedIn partner approval.
+
+Practical options we can use now:
+  1. This JSON is the source of truth.
+     Write / paste the post here, add an image, then share that
+     same story on LinkedIn (site → social).
+  2. After you publish on LinkedIn, paste the post URL into
+     "linkedinUrl" so the card links out (social → site).
+  3. Later: an approved LinkedIn embed, or an RSS/blog feed,
+     if you want fully automatic sync.
+
+Do not put personal names in the cards.

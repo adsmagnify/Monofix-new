@@ -1,0 +1,82 @@
+{
+  "show": 7,
+  "items": [
+    {
+      "id": "pc-products",
+      "title": "End-to-end delivery of PC products (U)",
+      "area": "NPD",
+      "image": "",
+      "href": "",
+      "active": true,
+      "highlight": false,
+      "accent": "lime",
+      "order": 1
+    },
+    {
+      "id": "bkk-cost",
+      "title": "Cost savings — Bkk case study",
+      "area": "Value engineering",
+      "image": "",
+      "href": "",
+      "active": true,
+      "highlight": false,
+      "accent": "blue",
+      "order": 2
+    },
+    {
+      "id": "egypt-audit",
+      "title": "Audit / quality — Egypt example",
+      "area": "Audit & quality",
+      "image": "",
+      "href": "",
+      "active": true,
+      "highlight": false,
+      "accent": "pink",
+      "order": 3
+    },
+    {
+      "id": "europe-ppwr",
+      "title": "Sustainability — Europe PPWR example",
+      "area": "Sustainability",
+      "image": "",
+      "href": "",
+      "active": true,
+      "highlight": false,
+      "accent": "navy",
+      "order": 4
+    },
+    {
+      "id": "alcobev-resource",
+      "title": "Resource augmentation — AlcoBev USA, cosmetics",
+      "area": "Resourcing",
+      "image": "",
+      "href": "",
+      "active": true,
+      "highlight": false,
+      "accent": "lime",
+      "order": 5
+    },
+    {
+      "id": "beauty-cartons",
+      "title": "Cartons optimisation — beauty portfolio",
+      "area": "Secondary pack",
+      "image": "",
+      "href": "",
+      "active": true,
+      "highlight": false,
+      "accent": "blue",
+      "order": 6
+    },
+    {
+      "id": "sugar-gmp",
+      "title": "Sugar operations GMP",
+      "area": "Quality",
+      "image": "",
+      "href": "",
+      "active": true,
+      "highlight": false,
+      "accent": "pink",
+      "order": 7
+    }
+  ]
+}

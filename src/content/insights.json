@@ -1,0 +1,89 @@
+{
+  "show": 7,
+  "items": [
+    {
+      "id": "packaging-for-dummies",
+      "title": "“Packaging for Dummies” — de-mystifying packaging",
+      "text": "A clear series for marketers, founders and operations teams who need the language of pack without the jargon.",
+      "image": "",
+      "href": "",
+      "linkedinUrl": "",
+      "active": true,
+      "highlight": false,
+      "accent": "blue",
+      "order": 1
+    },
+    {
+      "id": "greenwashing",
+      "title": "Sustainability versus green-washing",
+      "text": "What actually counts under PPWR and EPR — and what is only a claim.",
+      "image": "",
+      "href": "",
+      "linkedinUrl": "",
+      "active": true,
+      "highlight": false,
+      "accent": "lime",
+      "order": 2
+    },
+    {
+      "id": "packaging-sells",
+      "title": "Case studies: where packaging sells more than the product",
+      "text": "When structure, colour and shelf blocking do the commercial work.",
+      "image": "",
+      "href": "",
+      "linkedinUrl": "",
+      "active": true,
+      "highlight": false,
+      "accent": "pink",
+      "order": 3
+    },
+    {
+      "id": "zero-packaging",
+      "title": "Zero packaging as a concept",
+      "text": "When less pack is the brief, and when it is not.",
+      "image": "",
+      "href": "",
+      "linkedinUrl": "",
+      "active": true,
+      "highlight": false,
+      "accent": "navy",
+      "order": 4
+    },
+    {
+      "id": "multi-tasker",
+      "title": "Packaging as a multi-4-tasker",
+      "text": "Brand-building + USP advertising + shelf-appeal + protection — in one object.",
+      "image": "",
+      "href": "",
+      "linkedinUrl": "",
+      "active": true,
+      "highlight": false,
+      "accent": "blue",
+      "order": 5
+    },
+    {
+      "id": "industry-nuances",
+      "title": "Packaging nuances across industries",
+      "text": "FMCG, beauty, beverage, AlcoBev and food each fail in different ways.",
+      "image": "",
+      "href": "",
+      "linkedinUrl": "",
+      "active": true,
+      "highlight": false,
+      "accent": "lime",
+      "order": 6
+    },
+    {
+      "id": "masterclass",
+      "title": "Master-class guests",
+      "text": "MD / CMO / CTO-R&D / IIP experts — invited sessions in their field.",
+      "image": "",
+      "href": "",
+      "linkedinUrl": "",
+      "active": true,
+      "highlight": false,
+      "accent": "pink",
+      "order": 7
+    }
+  ]
+}

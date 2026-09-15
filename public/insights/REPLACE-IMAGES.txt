@@ -1,0 +1,10 @@
+INSIGHT IMAGES — drop-in folder
+===============================
+
+Put jpg / png / webp files here, then set the matching path
+in src/content/insights.json, for example:
+
+  "image": "/insights/greenwashing.jpg"
+
+Leave "image" as "" if a card has no picture yet.
+Deploy after adding files (same as public/home banners).

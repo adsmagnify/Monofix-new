@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Figtree, Syne } from "next/font/google";
+import { Figtree, Syne, Geist } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MarketPopup } from "@/components/MarketPopup";
 import { Main } from "@/components/Main";
 import { site } from "@/content/site";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -51,7 +54,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body className={`${figtree.variable} ${syne.variable} antialiased`}>
         <a className="skip" href="#main">
           Skip to content

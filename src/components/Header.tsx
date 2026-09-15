@@ -42,7 +42,7 @@ export function Header() {
       return;
     }
 
-    const ids = ["hero", "about", "why", "services", "gallery", "sustainability", "testimonials", "insights", "contact", "packgn", "casestudies"];
+    const ids = ["hero", "about", "why", "services", "gallery", "sustainability", "testimonials", "insights", "casestudies", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries

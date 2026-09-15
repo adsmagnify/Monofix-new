@@ -15,7 +15,7 @@ export default function WhyPage() {
         lead="Your End-to-End partner, till successful Launch !"
       />
       <section className="bg-ink text-white">
-        <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
+        <div className="mx-auto max-w-[1400px] px-6 py-10 sm:px-10 lg:px-16 lg:py-12">
           <DifferenceTable />
         </div>
       </section>

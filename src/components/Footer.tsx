@@ -8,22 +8,22 @@ export function Footer() {
       <div className="mx-auto grid max-w-[1400px] gap-12 px-6 py-20 sm:px-10 md:grid-cols-4 lg:px-16">
         <div>
           <Image
-            src="/logo-nav.png"
+            src="/logo-grey.png"
             alt={site.name}
             width={360}
             height={90}
-            className="h-12 w-auto object-contain"
+            className="h-14 w-auto rounded-md object-contain sm:h-16"
             unoptimized
           />
           <p className="mt-5 max-w-xs text-base text-white/55">{site.tagline}</p>
-          <p className="mt-6 flex flex-wrap gap-2 text-xs font-semibold tracking-[0.18em] uppercase">
+          <ul className="mt-6 grid gap-1.5 text-xs font-semibold tracking-[0.18em] uppercase">
             {site.hashtags.map((tag) => (
-              <span key={tag} className="rounded-full bg-white/10 px-3 py-1">
+              <li key={tag}>
                 <span className="text-pink">#</span>
                 {tag}
-              </span>
+              </li>
             ))}
-          </p>
+          </ul>
         </div>
         <div>
           <p className="font-display text-sm tracking-wide text-white uppercase">Services</p>
@@ -48,6 +48,11 @@ export function Footer() {
             <li>
               <Link href="/#why" className="hover:text-lime">
                 Why MONOFIX
+              </Link>
+            </li>
+            <li>
+              <Link href="/#testimonials" className="hover:text-lime">
+                Clients
               </Link>
             </li>
             <li>
@@ -81,7 +86,7 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/#packgn" className="hover:text-lime">
+              <Link href="/#packaging-made-easy" className="hover:text-lime">
                 Packaging made easy
               </Link>
             </li>

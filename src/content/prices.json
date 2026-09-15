@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "code": "PET", "name": "PET resin", "sourceUrl": "" },
+    { "code": "HDPE", "name": "HDPE", "sourceUrl": "" },
+    { "code": "PP", "name": "Polypropylene", "sourceUrl": "" },
+    { "code": "Kraft", "name": "Kraft paper", "sourceUrl": "" }
+  ]
+}
