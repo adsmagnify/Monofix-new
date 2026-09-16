@@ -18,7 +18,7 @@ export type ClientStory = {
 
 const ACCENTS: ClientAccent[] = ["blue", "lime", "pink", "navy"];
 
-function arrange<T extends { highlight?: boolean; order?: number; accent?: ClientAccent }>(
+function arrange<T extends { highlight?: boolean; order?: number; accent?: ClientAccent; active?: boolean }>(
   items: T[],
   max: number,
 ): T[] {
