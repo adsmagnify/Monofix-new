@@ -91,13 +91,49 @@ function localMobileByOrder() {
     .map((name) => `/home/${name}`);
 }
 
+type SanityImageValue = {
+  asset?: {
+    metadata?: {
+      dimensions?: { width?: number; height?: number; aspectRatio?: number };
+    };
+  };
+  alt?: string;
+};
+
 type SanityBanner = {
   _id: string;
   title?: string;
   order?: number;
-  image?: { asset?: unknown; alt?: string };
-  mobileImage?: { asset?: unknown; alt?: string };
+  image?: SanityImageValue;
+  mobileImage?: SanityImageValue;
 };
+
+function isPortrait(image?: SanityImageValue) {
+  const dimensions = image?.asset?.metadata?.dimensions;
+  if (!dimensions) return false;
+  const ratio =
+    dimensions.aspectRatio ??
+    (dimensions.width && dimensions.height ? dimensions.width / dimensions.height : undefined);
+  return ratio != null && ratio < 1;
+}
+
+function splitBannerImages(banner: SanityBanner) {
+  const desk = banner.image;
+  const mob = banner.mobileImage;
+  const deskPortrait = Boolean(desk?.asset) && isPortrait(desk);
+  const mobPortrait = mob?.asset ? isPortrait(mob) : undefined;
+
+  if (deskPortrait && mob?.asset && mobPortrait === false) {
+    return { desktop: mob, mobile: desk };
+  }
+  if (deskPortrait) {
+    return { desktop: undefined, mobile: desk };
+  }
+  if (mob?.asset && mobPortrait === false) {
+    return { desktop: desk, mobile: undefined };
+  }
+  return { desktop: desk, mobile: mob };
+}
 
 export async function getHomeSlides(): Promise<HomeSlide[]> {
   const local = localHomeSlides();
@@ -107,20 +143,23 @@ export async function getHomeSlides(): Promise<HomeSlide[]> {
     const banners = await sanityQuery<SanityBanner[]>(HOME_BANNERS_QUERY);
     const mapped =
       banners
-        ?.map((banner) => ({
-          src: urlForImage(banner.image, 2400),
-          sanityMobile: urlForImage(banner.mobileImage, 1600, true),
-          alt: banner.image?.alt || banner.title || "MONOFIX home banner",
-          order: banner.order,
-          title: banner.title,
-        }))
-        .filter((slide) => slide.src)
+        ?.map((banner) => {
+          const { desktop, mobile } = splitBannerImages(banner);
+          return {
+            src: urlForImage(desktop, 2400),
+            sanityMobile: urlForImage(mobile, 1600, true),
+            alt: desktop?.alt || mobile?.alt || banner.title || "MONOFIX home banner",
+            order: banner.order,
+            title: banner.title,
+          };
+        })
         .sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || slideIndex(a.title || "") - slideIndex(b.title || ""))
         .map((slide, index) => ({
-          src: slide.src,
+          src: slide.src || local[index]?.src || "",
           mobileSrc: slide.sanityMobile || localMobile[index] || local[index]?.mobileSrc,
           alt: slide.alt,
-        })) ?? [];
+        }))
+        .filter((slide) => slide.src) ?? [];
     if (mapped.length > 0) return mapped;
   }
 

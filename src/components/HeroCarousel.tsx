@@ -245,7 +245,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
               src={slide.src}
               alt={slide.alt}
               draggable={false}
-              className="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
+              className="hero-img-desktop absolute inset-0 h-full w-full object-cover object-center"
             />
             <img
               ref={(el) => {
@@ -254,7 +254,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
               src={mobileSrc}
               alt={slide.alt}
               draggable={false}
-              className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+              className="hero-img-mobile absolute inset-0 h-full w-full object-cover object-center"
             />
           </figure>
         );

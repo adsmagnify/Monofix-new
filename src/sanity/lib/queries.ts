@@ -23,9 +23,14 @@ export const HOME_BANNERS_QUERY = defineQuery(/* groq */ `
     _id,
     title,
     order,
-    ${imageProjection},
+    image {
+      asset->{_id, url, metadata { dimensions { width, height, aspectRatio } }},
+      alt,
+      hotspot,
+      crop
+    },
     mobileImage {
-      asset->{_id, url},
+      asset->{_id, url, metadata { dimensions { width, height, aspectRatio } }},
       alt,
       hotspot,
       crop
