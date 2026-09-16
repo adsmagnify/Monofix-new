@@ -1,7 +1,10 @@
-HOME PAGE BANNERS — drop-in folder
-==================================
+HOME PAGE BANNERS
+=================
 
-This folder powers the full-screen home carousel.
+PREFERRED: Sanity Studio → Home banners (upload 16:9 images, set Order and Status).
+
+FALLBACK if Studio is not connected yet: drop files into this folder.
+
 
 Current loop (keep these names if you only want to SWAP the picture):
   one-carousel.jpg
@@ -10,6 +13,14 @@ Current loop (keep these names if you only want to SWAP the picture):
   four-carousel.png
   five-carousel.png
   six-carousel.png
+
+Phone versions (shown below 768px):
+  one-carousel-mobile.png
+  twoo-carousel-mobile.png
+  three-carousel-mobile.png
+  four-carousel-mobile.png
+  five-carousel-mobile.png
+  six-carousel-mobile.png
 
 HOW TO CHANGE A BANNER (festival / topical / daily)
 ---------------------------------------------------

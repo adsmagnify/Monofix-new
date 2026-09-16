@@ -1,0 +1,41 @@
+{
+  "show": 4,
+  "items": [
+    {
+      "id": "coffee",
+      "title": "New packaging design. Coffee.",
+      "image": "/home/one-carousel.jpg",
+      "note": "Structural shape and shelf presence for a coffee major.",
+      "active": true,
+      "highlight": true,
+      "order": 1
+    },
+    {
+      "id": "ethnographic",
+      "title": "Ethnographic research, consumer insights",
+      "image": "/home/six-carousel.png",
+      "note": "How people actually use, store and choose the pack.",
+      "active": true,
+      "highlight": false,
+      "order": 2
+    },
+    {
+      "id": "retail-soaps",
+      "title": "Retail benchmarking study — soaps",
+      "image": "/home/four-carousel.png",
+      "note": "Shelf, format and claim mapping across the aisle.",
+      "active": true,
+      "highlight": false,
+      "order": 3
+    },
+    {
+      "id": "artworks",
+      "title": "Artworks — colour optimisation",
+      "image": "/home/five-carousel.png",
+      "note": "Print-true colour so the brand holds from proof to pallet.",
+      "active": true,
+      "highlight": false,
+      "order": 4
+    }
+  ]
+}

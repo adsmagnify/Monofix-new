@@ -1,13 +1,13 @@
-INSIGHTS, BLOGS, PRICES, IMAGES — edit these, not the React components
-======================================================================
+INSIGHTS, BLOGS, PRICES, IMAGES
+================================
 
-FILES
------
-  src/content/insights.json     blog / insight cards (rotate, highlight, links)
-  src/content/prices.json       PET / HDPE / PP / Kraft tiles
-  public/insights/              drop-in images for those cards
+PREFERRED: Sanity Studio → Insights, Material prices, and Display settings.
 
-Then deploy (same as home banners or client quotes). No code change.
+FALLBACK if Studio is not connected yet:
+  src/content/insights.json
+  src/content/prices.json
+  public/insights/
+
 
 INSIGHT / BLOG CARDS  (insights.json)
 -------------------------------------

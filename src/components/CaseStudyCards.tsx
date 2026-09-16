@@ -121,8 +121,8 @@ function CardInner({ item, index, dark }: { item: CaseStudy; index: number; dark
   );
 }
 
-export function CaseStudyCards({ tone = "dark" }: Props) {
-  const items = getCaseStudies();
+export async function CaseStudyCards({ tone = "dark" }: Props) {
+  const items = await getCaseStudies();
   const dark = tone === "dark";
 
   return (

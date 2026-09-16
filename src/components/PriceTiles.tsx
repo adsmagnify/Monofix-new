@@ -1,7 +1,7 @@
 import { getPrices } from "@/lib/insights";
 
-export function PriceTiles() {
-  const items = getPrices();
+export async function PriceTiles() {
+  const items = await getPrices();
 
   return (
     <div className="mt-8 rounded-2xl bg-navy p-6 text-white">

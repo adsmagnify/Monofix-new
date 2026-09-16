@@ -15,6 +15,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     return "";
   }, [region]);
 
+ 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,7 +32,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       regionNote ? `Region: ${regionNote}` : "",
       "",
       message,
-    ]
+    ] 
       .filter(Boolean)
       .join("\n");
     const href = `mailto:${site.email}?subject=${encodeURIComponent(

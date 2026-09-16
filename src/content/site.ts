@@ -86,26 +86,32 @@ export const teamHighlights = [
 export const homeSlides = [
   {
     src: "/home/one-carousel.jpg",
+    mobileSrc: "/home/one-carousel-mobile.png",
     alt: "Innovative packaging solutions that mean business",
   },
   {
     src: "/home/twoo-carousel.png",
+    mobileSrc: "/home/twoo-carousel-mobile.png",
     alt: "From a complex packaging problem to a launch that grows the brand",
   },
   {
     src: "/home/three-carousel.png",
+    mobileSrc: "/home/three-carousel-mobile.png",
     alt: "Innovative packaging solutions — a clear path through complexity",
   },
   {
     src: "/home/four-carousel.png",
+    mobileSrc: "/home/four-carousel-mobile.png",
     alt: "Innovative packaging solutions that mean business",
   },
   {
     src: "/home/five-carousel.png",
+    mobileSrc: "/home/five-carousel-mobile.png",
     alt: "Smarter, sustainable, impactful packaging",
   },
   {
     src: "/home/six-carousel.png",
+    mobileSrc: "/home/six-carousel-mobile.png",
     alt: "Over 70 percent of consumers prefer sustainable packaging",
   },
 ] as const;
@@ -226,29 +232,6 @@ export const whyTable = {
     { capability: "End-to-End Expertise", agency: false, monofix: true, vendor: false, emphasize: true },
   ],
 } as const;
-
-export const gallery = [
-  {
-    title: "New packaging design. Coffee.",
-    image: "/home/one-carousel.jpg",
-    note: "Structural shape and shelf presence for a coffee major.",
-  },
-  {
-    title: "Ethnographic research, consumer insights",
-    image: "/home/six-carousel.png",
-    note: "How people actually use, store and choose the pack.",
-  },
-  {
-    title: "Retail benchmarking study — soaps",
-    image: "/home/four-carousel.png",
-    note: "Shelf, format and claim mapping across the aisle.",
-  },
-  {
-    title: "Artworks — colour optimisation",
-    image: "/home/five-carousel.png",
-    note: "Print-true colour so the brand holds from proof to pallet.",
-  },
-];
 
 export const sustainabilityPoints = [
   {

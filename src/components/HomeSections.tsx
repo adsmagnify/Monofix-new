@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import { Suspense } from "react";
 import { ContactForm } from "@/components/ContactForm";
 import { DifferenceTable } from "@/components/DifferenceTable";
@@ -11,8 +9,9 @@ import { PriceTiles } from "@/components/PriceTiles";
 import { ServiceCards } from "@/components/ServiceCards";
 import { SustainabilityCards } from "@/components/SustainabilityCards";
 import { TestimonialCards } from "@/components/TestimonialCards";
+import { GalleryCards } from "@/components/GalleryCards";
 import { TeamPeopleList } from "@/components/TeamGrid";
-import { gallery, site, teamHighlights } from "@/content/site";
+import { site, teamHighlights } from "@/content/site";
 
 export function HomeSections() {
   return (
@@ -70,20 +69,7 @@ export function HomeSections() {
 
       <Section id="gallery" className="bg-paper">
         <SectionHead kicker="Gallery" title={<>Work <span className="text-blue">samples</span></>} />
-        <div className="mt-8 grid grid-cols-2 grid-rows-2 gap-3 lg:h-[min(58vh,32rem)] lg:grid-cols-4">
-          {gallery.map((item, index) => (
-            <article
-              key={item.title}
-              className={`relative overflow-hidden rounded-2xl ${index === 0 ? "col-span-2 row-span-2 min-h-[16rem]" : "min-h-[8rem]"}`}
-            >
-              <Image src={item.image} alt={item.title} fill className="object-cover" sizes="50vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-                <h3 className="font-display text-lg leading-tight sm:text-xl">{item.title}</h3>
-              </div>
-            </article>
-          ))}
-        </div>
+        <GalleryCards />
       </Section>
 
       <Section id="sustainability" className="bg-[linear-gradient(135deg,#0a2418_0%,#07151f_55%,#0c2c4a_100%)] text-white">

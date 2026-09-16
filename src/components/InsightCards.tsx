@@ -105,8 +105,8 @@ function CardBody({ item, index, showText }: { item: InsightItem; index: number;
   );
 }
 
-export function InsightCards({ showText = false }: Props) {
-  const items = getInsights();
+export async function InsightCards({ showText = false }: Props) {
+  const items = await getInsights();
 
   return (
     <div className="mt-6 grid gap-3 sm:grid-cols-2">

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type HomeSlide = { src: string; alt: string };
+type HomeSlide = { src: string; mobileSrc?: string; alt: string };
 
 type HeroCarouselProps = {
   slides: HomeSlide[];
@@ -10,6 +10,7 @@ type HeroCarouselProps = {
 
 const HOLD_MS = 5200;
 const DISSOLVE_MS = 900;
+const MOBILE_MQ = "(max-width: 767px)";
 
 function clamp01(n: number) {
   return Math.min(1, Math.max(0, n));
@@ -20,15 +21,48 @@ function smootherstep(t: number) {
   return x * x * x * (x * (x * 6 - 15) + 10);
 }
 
+function isMobileView() {
+  return window.matchMedia(MOBILE_MQ).matches;
+}
+
 function coverSource(img: HTMLImageElement, viewW: number, viewH: number) {
   const ir = img.naturalWidth / img.naturalHeight;
   const cr = viewW / viewH;
   if (ir > cr) {
     const sw = img.naturalHeight * cr;
-    return { sx: (img.naturalWidth - sw) / 2, sy: 0, sw, sh: img.naturalHeight };
+    return { sx: (img.naturalWidth - sw) / 2, sy: 0, sw, sh: img.naturalHeight, dx: 0, dy: 0, dw: viewW, dh: viewH };
   }
   const sh = img.naturalWidth / cr;
-  return { sx: 0, sy: (img.naturalHeight - sh) / 2, sw: img.naturalWidth, sh };
+  return { sx: 0, sy: (img.naturalHeight - sh) / 2, sw: img.naturalWidth, sh, dx: 0, dy: 0, dw: viewW, dh: viewH };
+}
+
+function containSource(img: HTMLImageElement, viewW: number, viewH: number) {
+  const ir = img.naturalWidth / img.naturalHeight;
+  const cr = viewW / viewH;
+  if (ir > cr) {
+    const dh = viewW / ir;
+    return {
+      sx: 0,
+      sy: 0,
+      sw: img.naturalWidth,
+      sh: img.naturalHeight,
+      dx: 0,
+      dy: (viewH - dh) / 2,
+      dw: viewW,
+      dh,
+    };
+  }
+  const dw = viewH * ir;
+  return {
+    sx: 0,
+    sy: 0,
+    sw: img.naturalWidth,
+    sh: img.naturalHeight,
+    dx: (viewW - dw) / 2,
+    dy: 0,
+    dw,
+    dh: viewH,
+  };
 }
 
 function drawPixelBlur(
@@ -43,12 +77,13 @@ function drawPixelBlur(
   block: number,
   blur: number,
   alpha: number,
+  contain: boolean,
 ) {
   if (!img.naturalWidth || alpha <= 0.01) return;
   const size = Math.max(1, block);
-  const dw = Math.max(1, Math.round(viewW / size));
-  const dh = Math.max(1, Math.round(viewH / size));
-  const src = coverSource(img, viewW, viewH);
+  const src = contain ? containSource(img, viewW, viewH) : coverSource(img, viewW, viewH);
+  const dw = Math.max(1, Math.round(src.dw / size));
+  const dh = Math.max(1, Math.round(src.dh / size));
 
   sample.width = dw;
   sample.height = dh;
@@ -62,7 +97,7 @@ function drawPixelBlur(
   }
   mosaicCtx.imageSmoothingEnabled = false;
   mosaicCtx.clearRect(0, 0, viewW, viewH);
-  mosaicCtx.drawImage(sample, 0, 0, dw, dh, 0, 0, viewW, viewH);
+  mosaicCtx.drawImage(sample, 0, 0, dw, dh, src.dx, src.dy, src.dw, src.dh);
 
   ctx.save();
   ctx.globalAlpha = alpha;
@@ -81,7 +116,8 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
 
   const frameRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const desktopRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const mobileRefs = useRef<(HTMLImageElement | null)[]>([]);
   const leavingRef = useRef<number | null>(null);
   const indexRef = useRef(0);
 
@@ -118,8 +154,9 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
     const toIndex = indexRef.current;
     if (!canvas || !frame || fromIndex === null) return;
 
-    const fromImg = imgRefs.current[fromIndex];
-    const toImg = imgRefs.current[toIndex];
+    const mobile = isMobileView();
+    const fromImg = (mobile ? mobileRefs : desktopRefs).current[fromIndex];
+    const toImg = (mobile ? mobileRefs : desktopRefs).current[toIndex];
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx || !fromImg || !toImg) {
       setDissolve(false);
@@ -159,8 +196,8 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         const toBlur = (1 - smootherstep(clamp01((t - 0.4) / 0.6))) * 9;
 
         ctx.clearRect(0, 0, w, h);
-        drawPixelBlur(ctx, sample, sampleCtx, mosaic, mosaicCtx, fromImg, w, h, fromPixel, fromBlur, 1);
-        drawPixelBlur(ctx, sample, sampleCtx, mosaic, mosaicCtx, toImg, w, h, toPixel, toBlur, e);
+        drawPixelBlur(ctx, sample, sampleCtx, mosaic, mosaicCtx, fromImg, w, h, fromPixel, fromBlur, 1, false);
+        drawPixelBlur(ctx, sample, sampleCtx, mosaic, mosaicCtx, toImg, w, h, toPixel, toBlur, e, false);
 
         if (t < 1) {
           raf = window.requestAnimationFrame(tick);
@@ -197,17 +234,27 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         const active = i === index;
         const isLeaving = i === leaving;
         const show = isLeaving || (active && !dissolve);
+        const mobileSrc = slide.mobileSrc || slide.src;
 
         return (
           <figure key={slide.src} className={`absolute inset-0 m-0 ${show ? "z-10 opacity-100" : "z-0 opacity-0"}`}>
             <img
               ref={(el) => {
-                imgRefs.current[i] = el;
+                desktopRefs.current[i] = el;
               }}
               src={slide.src}
               alt={slide.alt}
               draggable={false}
-              className="absolute inset-0 h-full w-full object-cover object-center"
+              className="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
+            />
+            <img
+              ref={(el) => {
+                mobileRefs.current[i] = el;
+              }}
+              src={mobileSrc}
+              alt={slide.alt}
+              draggable={false}
+              className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
             />
           </figure>
         );
@@ -220,9 +267,9 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         aria-hidden="true"
       />
 
-      <div className="absolute inset-0 z-[13] bg-ink/20" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 z-[13] hidden bg-ink/20 md:block" aria-hidden="true" />
       <div
-        className="absolute inset-x-0 top-0 z-[13] h-36 bg-gradient-to-b from-ink/55 to-transparent"
+        className="absolute inset-x-0 top-0 z-[13] hidden h-36 bg-gradient-to-b from-ink/55 to-transparent md:block"
         aria-hidden="true"
       />
       <div className="hero-grain pointer-events-none absolute inset-0 z-20" aria-hidden="true" />

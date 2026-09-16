@@ -1,4 +1,8 @@
 import studies from "@/content/casestudies.json";
+import { isSanityConfigured } from "@/sanity/env";
+import { sanityQuery } from "@/sanity/lib/fetch";
+import { urlForImage } from "@/sanity/lib/image";
+import { CASE_STUDIES_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export type CaseAccent = "blue" | "lime" | "pink" | "navy";
 
@@ -16,10 +20,7 @@ export type CaseStudy = {
 
 const ACCENTS: CaseAccent[] = ["lime", "blue", "pink", "navy"];
 
-export function getCaseStudies(): CaseStudy[] {
-  const max = studies.show ?? 7;
-  const items = studies.items as CaseStudy[];
-
+function arrange(items: CaseStudy[], max: number): CaseStudy[] {
   return [...items]
     .filter((item) => item.active !== false)
     .sort((a, b) => {
@@ -31,4 +32,42 @@ export function getCaseStudies(): CaseStudy[] {
       ...item,
       accent: item.accent ?? ACCENTS[index % ACCENTS.length],
     }));
+}
+
+export async function getCaseStudies(): Promise<CaseStudy[]> {
+  if (isSanityConfigured()) {
+    const [rows, settings] = await Promise.all([
+      sanityQuery<
+        Array<{
+          _id: string;
+          title: string;
+          area: string;
+          href?: string;
+          accent?: CaseAccent;
+          order?: number;
+          featured?: boolean;
+          image?: { asset?: unknown; alt?: string };
+        }>
+      >(CASE_STUDIES_QUERY),
+      sanityQuery<{ caseStudiesToShow?: number }>(SITE_SETTINGS_QUERY),
+    ]);
+
+    if (rows?.length) {
+      return arrange(
+        rows.map((row) => ({
+          id: row._id,
+          title: row.title,
+          area: row.area,
+          href: row.href,
+          image: urlForImage(row.image, 900) || undefined,
+          accent: row.accent,
+          order: row.order,
+          highlight: Boolean(row.featured),
+        })),
+        settings?.caseStudiesToShow ?? studies.show ?? 7,
+      );
+    }
+  }
+
+  return arrange(studies.items as CaseStudy[], studies.show ?? 7);
 }

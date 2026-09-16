@@ -1,12 +1,12 @@
-CASE STUDIES — edit this file, not the React components
-=======================================================
+CASE STUDIES
+============
 
-FILES
------
-  src/content/casestudies.json     titles, tags, rotate, highlight
-  public/casestudies/              drop-in images
+PREFERRED: Sanity Studio → Case studies (title, tag, image, Featured, Order, Status).
 
-Then deploy (same as home banners / client quotes). No code change.
+FALLBACK if Studio is not connected yet:
+  src/content/casestudies.json
+  public/casestudies/
+
 
 WHAT SHOWS
 ----------

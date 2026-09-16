@@ -2,8 +2,8 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 import { HomeSections } from "@/components/HomeSections";
 import { getHomeSlides } from "@/lib/home-slides";
 
-export default function HomePage() {
-  const slides = getHomeSlides();
+export default async function HomePage() {
+  const slides = await getHomeSlides();
 
   return (
     <div className="home-deck">

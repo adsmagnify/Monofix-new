@@ -1,11 +1,12 @@
-CLIENT TESTIMONIALS — edit this file, not the React components
-==============================================================
+CLIENT TESTIMONIALS
+===================
 
-The homepage Clients section reads:
+PREFERRED: edit in Sanity Studio (studio/ folder, npm run studio from the repo root).
+Set Status, Order and Featured there. Then the live site updates.
+
+FALLBACK if Studio is not connected yet:
   src/content/clients.json
 
-That JSON is the library. Add, hide, highlight or rotate quotes there.
-Then deploy (same as swapping a home banner). No code change.
 
 WHAT SHOWS ON THE SITE
 ----------------------

@@ -35,8 +35,8 @@ const accents: Record<
   },
 };
 
-export function TestimonialCards() {
-  const stories = getClientStories();
+export async function TestimonialCards() {
+  const stories = await getClientStories();
 
   return (
     <div className="mt-10 grid gap-5 lg:grid-cols-3">
