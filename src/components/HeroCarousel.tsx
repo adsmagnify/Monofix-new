@@ -234,28 +234,34 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         const active = i === index;
         const isLeaving = i === leaving;
         const show = isLeaving || (active && !dissolve);
-        const mobileSrc = slide.mobileSrc || slide.src;
+        const desktopSrc = /mobile/i.test(slide.src) ? "" : slide.src;
+        const mobileSrc = slide.mobileSrc || desktopSrc;
+        if (!desktopSrc && !mobileSrc) return null;
 
         return (
-          <figure key={slide.src} className={`absolute inset-0 m-0 ${show ? "z-10 opacity-100" : "z-0 opacity-0"}`}>
-            <img
-              ref={(el) => {
-                desktopRefs.current[i] = el;
-              }}
-              src={slide.src}
-              alt={slide.alt}
-              draggable={false}
-              className="hero-img-desktop absolute inset-0 h-full w-full object-cover object-center"
-            />
-            <img
-              ref={(el) => {
-                mobileRefs.current[i] = el;
-              }}
-              src={mobileSrc}
-              alt={slide.alt}
-              draggable={false}
-              className="hero-img-mobile absolute inset-0 h-full w-full object-cover object-center"
-            />
+          <figure key={`${slide.src}-${i}`} className={`absolute inset-0 m-0 ${show ? "z-10 opacity-100" : "z-0 opacity-0"}`}>
+            {desktopSrc ? (
+              <img
+                ref={(el) => {
+                  desktopRefs.current[i] = el;
+                }}
+                src={desktopSrc}
+                alt={slide.alt}
+                draggable={false}
+                className="hero-img-desktop absolute inset-0 h-full w-full object-cover object-center"
+              />
+            ) : null}
+            {mobileSrc ? (
+              <img
+                ref={(el) => {
+                  mobileRefs.current[i] = el;
+                }}
+                src={mobileSrc}
+                alt={slide.alt}
+                draggable={false}
+                className="hero-img-mobile absolute inset-0 h-full w-full object-cover object-center"
+              />
+            ) : null}
           </figure>
         );
       })}

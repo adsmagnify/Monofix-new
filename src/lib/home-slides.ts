@@ -41,11 +41,20 @@ function isImageFile(name: string) {
 }
 
 function isMobileBanner(name: string) {
-  return /-mobile\./i.test(name);
+  const base = name.replace(/\.[^.]+$/, "");
+  return /mobile/i.test(base);
 }
 
 function stem(name: string) {
-  return name.replace(/\.[^.]+$/, "").replace(/-mobile$/i, "").toLowerCase();
+  return name
+    .replace(/\.[^.]+$/, "")
+    .replace(/-mobilee$/i, "")
+    .replace(/-mobile$/i, "")
+    .toLowerCase();
+}
+
+function looksLikeMobileSrc(src: string) {
+  return /mobile/i.test(src);
 }
 
 function listHomeImages() {
@@ -63,9 +72,13 @@ function listHomeImages() {
 function localHomeSlides(): HomeSlide[] {
   const names = listHomeImages();
   const altBySrc = Object.fromEntries(homeSlides.map((slide) => [slide.src, slide.alt]));
-  const mobileByStem = new Map(
-    names.filter(isMobileBanner).map((name) => [stem(name), `/home/${name}`]),
-  );
+  const mobileByStem = new Map<string, string>();
+  for (const name of names.filter(isMobileBanner)) {
+    const key = stem(name);
+    if (!mobileByStem.has(key) || /-mobile\./i.test(name)) {
+      mobileByStem.set(key, `/home/${name}`);
+    }
+  }
   const desktop = names
     .filter((name) => !isMobileBanner(name))
     .sort((a, b) => slideIndex(a) - slideIndex(b) || a.localeCompare(b, undefined, { numeric: true }));
@@ -154,11 +167,14 @@ export async function getHomeSlides(): Promise<HomeSlide[]> {
           };
         })
         .sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || slideIndex(a.title || "") - slideIndex(b.title || ""))
-        .map((slide, index) => ({
-          src: slide.src || local[index]?.src || "",
-          mobileSrc: slide.sanityMobile || localMobile[index] || local[index]?.mobileSrc,
-          alt: slide.alt,
-        }))
+        .map((slide, index) => {
+          const desktopSrc = looksLikeMobileSrc(slide.src) ? "" : slide.src;
+          return {
+            src: desktopSrc || local[index]?.src || "",
+            mobileSrc: slide.sanityMobile || localMobile[index] || local[index]?.mobileSrc,
+            alt: slide.alt,
+          };
+        })
         .filter((slide) => slide.src) ?? [];
     if (mapped.length > 0) return mapped;
   }
