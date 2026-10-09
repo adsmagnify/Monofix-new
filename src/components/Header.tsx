@@ -8,12 +8,16 @@ import { nav, site } from "@/content/site";
 
 const links = nav.filter((item) => item.id !== "contact");
 
-export function Header() {
+type HeaderProps = {
+  mode?: "overlay" | "solid";
+};
+
+export function Header({ mode = "solid" }: HeaderProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("hero");
-  const isHome = pathname === "/";
+  const isHome = mode === "overlay";
+  const [active, setActive] = useState(isHome ? "hero" : "");
   const solid = !isHome || scrolled || open;
   const headerRef = useRef<HTMLElement>(null);
 

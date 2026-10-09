@@ -103,7 +103,10 @@ html {
   scroll-padding-top: var(--header-h);
 }
 
-html,
+html {
+  min-height: 100%;
+}
+
 body {
   min-height: 100%;
   overflow-x: clip;

@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  ...studioViewport,
+  width: studioViewport.width,
+  initialScale: studioViewport.initialScale,
+  viewportFit: "cover",
 };
 
 export default function StudioLayout({ children }: { children: ReactNode }) {

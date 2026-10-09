@@ -1,15 +1,10 @@
-"use client";
+import type { ReactNode } from "react";
 
-import { usePathname } from "next/navigation";
-
-export function Main({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const isHome = pathname === "/";
-
+export function Main({ children, padded }: { children: ReactNode; padded?: boolean }) {
   return (
     <main
       id="main"
-      style={isHome ? undefined : { paddingTop: "var(--header-h, 7.5rem)" }}
+      style={padded ? { paddingTop: "var(--header-h, 7.5rem)" } : undefined}
     >
       {children}
     </main>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Figtree, Syne, Geist } from "next/font/google";
-import { SiteChrome } from "@/components/SiteChrome";
 import { site } from "@/content/site";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -53,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
       <body className={`${figtree.variable} ${syne.variable} antialiased`}>
-        <SiteChrome>{children}</SiteChrome>
+        {children}
       </body>
     </html>
   );
