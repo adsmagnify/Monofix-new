@@ -33,7 +33,7 @@ function BrandMark({ src, alt, onDark = false }: { src: string; alt: string; onD
     <img
       src={assetSrc(src)}
       alt={alt}
-      className={`h-10 w-auto max-w-full object-contain ${onDark ? "h-8" : "bg-white"}`}
+      className={`w-auto object-contain ${onDark ? "h-8" : "h-12 max-h-12"}`}
     />
   );
 }
@@ -93,9 +93,9 @@ function PersonCard({ person }: { person: Person }) {
         Experience
       </p>
 
-      <ul className="flex flex-wrap content-start items-center justify-center gap-x-4 gap-y-3 px-3 pt-3">
+      <ul className="grid grid-cols-2 content-start items-center justify-items-center gap-x-3 gap-y-3 px-3 pt-3">
         {person.companyLogos.map((logo) => (
-          <li key={logo.alt} className="flex h-10 max-w-[46%] items-center justify-center">
+          <li key={logo.alt} className="flex h-12 w-full items-center justify-center">
             <BrandMark src={logo.src} alt={logo.alt} />
           </li>
         ))}
