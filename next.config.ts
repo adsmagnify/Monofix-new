@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },
+  compiler: {
+    styledComponents: true,
+  },
 };
 
 export default nextConfig;
