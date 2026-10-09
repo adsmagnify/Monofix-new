@@ -45,6 +45,7 @@ type StudyFile = {
   items: Array<{
     title: string;
     area: string;
+    detail?: string;
     href: string;
     accent: string;
     order: number;
@@ -162,6 +163,7 @@ async function run() {
       _type: "caseStudy",
       title: item.title,
       area: item.area,
+      detail: item.detail || undefined,
       href: item.href || undefined,
       accent: item.accent,
       order: item.order,

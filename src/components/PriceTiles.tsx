@@ -13,7 +13,7 @@ export async function PriceTiles() {
               <p className="font-display text-2xl">{item.code}</p>
               <p className="text-xs text-white/65">{item.name}</p>
               <p className="mt-3 text-[10px] font-semibold tracking-wide text-lime uppercase">
-                {item.sourceUrl ? "Open source" : "Link pending"}
+                {item.sourceUrl ? "View source" : "Link pending"}
               </p>
             </>
           );
@@ -39,6 +39,27 @@ export async function PriceTiles() {
           );
         })}
       </div>
+      <p className="mt-4 text-[11px] leading-relaxed text-white/60 sm:text-xs">
+        These prices are not updated regularly. Please check with raw material suppliers for the latest prices.
+        Sources:{" "}
+        <a
+          href="https://plastic4trade.com/polymer-price-today-update-list-graph"
+          target="_blank"
+          rel="noreferrer"
+          className="text-lime underline-offset-2 hover:underline"
+        >
+          Plastic4Trade
+        </a>
+        {" · "}
+        <a
+          href="https://www.ofbusiness.com/prices/polymers-packaging"
+          target="_blank"
+          rel="noreferrer"
+          className="text-lime underline-offset-2 hover:underline"
+        >
+          OfBusiness
+        </a>
+      </p>
     </div>
   );
 }

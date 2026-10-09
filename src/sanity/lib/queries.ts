@@ -80,6 +80,7 @@ export const CASE_STUDIES_QUERY = defineQuery(/* groq */ `
     _id,
     title,
     area,
+    detail,
     href,
     accent,
     order,

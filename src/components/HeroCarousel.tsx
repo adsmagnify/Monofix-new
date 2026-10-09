@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { heroStats } from "@/content/site";
 
 type HomeSlide = { src: string; mobileSrc?: string; alt: string };
 
@@ -9,7 +10,7 @@ type HeroCarouselProps = {
 };
 
 const HOLD_MS = 5200;
-const DISSOLVE_MS = 900;
+const DISSOLVE_MS = 720;
 const MOBILE_MQ = "(max-width: 767px)";
 
 function clamp01(n: number) {
@@ -19,10 +20,6 @@ function clamp01(n: number) {
 function smootherstep(t: number) {
   const x = clamp01(t);
   return x * x * x * (x * (x * 6 - 15) + 10);
-}
-
-function isMobileView() {
-  return window.matchMedia(MOBILE_MQ).matches;
 }
 
 function coverSource(img: HTMLImageElement, viewW: number, viewH: number) {
@@ -36,74 +33,31 @@ function coverSource(img: HTMLImageElement, viewW: number, viewH: number) {
   return { sx: 0, sy: (img.naturalHeight - sh) / 2, sw: img.naturalWidth, sh, dx: 0, dy: 0, dw: viewW, dh: viewH };
 }
 
-function containSource(img: HTMLImageElement, viewW: number, viewH: number) {
-  const ir = img.naturalWidth / img.naturalHeight;
-  const cr = viewW / viewH;
-  if (ir > cr) {
-    const dh = viewW / ir;
-    return {
-      sx: 0,
-      sy: 0,
-      sw: img.naturalWidth,
-      sh: img.naturalHeight,
-      dx: 0,
-      dy: (viewH - dh) / 2,
-      dw: viewW,
-      dh,
-    };
-  }
-  const dw = viewH * ir;
-  return {
-    sx: 0,
-    sy: 0,
-    sw: img.naturalWidth,
-    sh: img.naturalHeight,
-    dx: (viewW - dw) / 2,
-    dy: 0,
-    dw,
-    dh: viewH,
-  };
-}
-
-function drawPixelBlur(
+function drawPixelated(
   ctx: CanvasRenderingContext2D,
   sample: HTMLCanvasElement,
   sampleCtx: CanvasRenderingContext2D,
-  mosaic: HTMLCanvasElement,
-  mosaicCtx: CanvasRenderingContext2D,
   img: HTMLImageElement,
   viewW: number,
   viewH: number,
   block: number,
-  blur: number,
   alpha: number,
-  contain: boolean,
 ) {
   if (!img.naturalWidth || alpha <= 0.01) return;
   const size = Math.max(1, block);
-  const src = contain ? containSource(img, viewW, viewH) : coverSource(img, viewW, viewH);
+  const src = coverSource(img, viewW, viewH);
   const dw = Math.max(1, Math.round(src.dw / size));
   const dh = Math.max(1, Math.round(src.dh / size));
 
-  sample.width = dw;
-  sample.height = dh;
+  if (sample.width !== dw) sample.width = dw;
+  if (sample.height !== dh) sample.height = dh;
   sampleCtx.imageSmoothingEnabled = false;
-  sampleCtx.clearRect(0, 0, dw, dh);
   sampleCtx.drawImage(img, src.sx, src.sy, src.sw, src.sh, 0, 0, dw, dh);
-
-  if (mosaic.width !== viewW || mosaic.height !== viewH) {
-    mosaic.width = viewW;
-    mosaic.height = viewH;
-  }
-  mosaicCtx.imageSmoothingEnabled = false;
-  mosaicCtx.clearRect(0, 0, viewW, viewH);
-  mosaicCtx.drawImage(sample, 0, 0, dw, dh, src.dx, src.dy, src.dw, src.dh);
 
   ctx.save();
   ctx.globalAlpha = alpha;
-  ctx.filter = blur > 0.4 ? `blur(${blur}px)` : "none";
-  ctx.drawImage(mosaic, 0, 0, viewW, viewH);
-  ctx.filter = "none";
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(sample, 0, 0, dw, dh, src.dx, src.dy, src.dw, src.dh);
   ctx.restore();
 }
 
@@ -116,13 +70,18 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
 
   const frameRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const desktopRefs = useRef<(HTMLImageElement | null)[]>([]);
-  const mobileRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
   const leavingRef = useRef<number | null>(null);
   const indexRef = useRef(0);
+  const inViewRef = useRef(true);
+  const sizeRef = useRef({ w: 1, h: 1 });
 
   useEffect(() => {
-    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setReduceMotion(motion.matches);
+    apply();
+    motion.addEventListener("change", apply);
+    return () => motion.removeEventListener("change", apply);
   }, []);
 
   useEffect(() => {
@@ -130,8 +89,39 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
   }, [index]);
 
   useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+
+    const measure = () => {
+      const rect = frame.getBoundingClientRect();
+      sizeRef.current = {
+        w: Math.max(1, Math.round(rect.width)),
+        h: Math.max(1, Math.round(rect.height)),
+      };
+    };
+    measure();
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting && entry.intersectionRatio > 0.2;
+      },
+      { threshold: [0, 0.2, 0.5] },
+    );
+    io.observe(frame);
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(frame);
+
+    return () => {
+      io.disconnect();
+      ro.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
     if (count < 2) return;
     const id = window.setInterval(() => {
+      if (!inViewRef.current || document.hidden) return;
       setIndex((current) => {
         const next = (current + 1) % count;
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -149,15 +139,13 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
     if (!dissolve || reduceMotion) return;
 
     const canvas = canvasRef.current;
-    const frame = frameRef.current;
     const fromIndex = leavingRef.current;
     const toIndex = indexRef.current;
-    if (!canvas || !frame || fromIndex === null) return;
+    if (!canvas || fromIndex === null) return;
 
-    const mobile = isMobileView();
-    const fromImg = (mobile ? mobileRefs : desktopRefs).current[fromIndex];
-    const toImg = (mobile ? mobileRefs : desktopRefs).current[toIndex];
-    const ctx = canvas.getContext("2d", { alpha: true });
+    const fromImg = imgRefs.current[fromIndex];
+    const toImg = imgRefs.current[toIndex];
+    const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
     if (!ctx || !fromImg || !toImg) {
       setDissolve(false);
       setLeaving(null);
@@ -165,39 +153,47 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
     }
 
     const sample = document.createElement("canvas");
-    const sampleCtx = sample.getContext("2d");
-    const mosaic = document.createElement("canvas");
-    const mosaicCtx = mosaic.getContext("2d");
-    if (!sampleCtx || !mosaicCtx) return;
+    const sampleCtx = sample.getContext("2d", { alpha: false });
+    if (!sampleCtx) return;
 
     let raf = 0;
     let started = 0;
     let cancelled = false;
+
+    const stop = () => {
+      if (cancelled) return;
+      cancelled = true;
+      window.cancelAnimationFrame(raf);
+      setDissolve(false);
+      setLeaving(null);
+      leavingRef.current = null;
+    };
 
     const run = () => {
       if (cancelled) return;
       started = performance.now();
       const tick = (now: number) => {
         if (cancelled) return;
+        if (!inViewRef.current) {
+          stop();
+          return;
+        }
+
         const t = Math.min(1, (now - started) / DISSOLVE_MS);
         const e = smootherstep(t);
-        const rect = frame.getBoundingClientRect();
-        const w = Math.max(1, Math.round(rect.width));
-        const h = Math.max(1, Math.round(rect.height));
+        const { w, h } = sizeRef.current;
 
         if (canvas.width !== w || canvas.height !== h) {
           canvas.width = w;
           canvas.height = h;
         }
 
-        const fromPixel = 1 + smootherstep(t / 0.42) * 12;
-        const fromBlur = smootherstep(clamp01((t - 0.22) / 0.5)) * 9;
-        const toPixel = 1 + (1 - smootherstep(clamp01((t - 0.48) / 0.52))) * 12;
-        const toBlur = (1 - smootherstep(clamp01((t - 0.4) / 0.6))) * 9;
+        const fromPixel = 1 + smootherstep(t / 0.42) * 10;
+        const toPixel = 1 + (1 - smootherstep(clamp01((t - 0.48) / 0.52))) * 10;
 
         ctx.clearRect(0, 0, w, h);
-        drawPixelBlur(ctx, sample, sampleCtx, mosaic, mosaicCtx, fromImg, w, h, fromPixel, fromBlur, 1, false);
-        drawPixelBlur(ctx, sample, sampleCtx, mosaic, mosaicCtx, toImg, w, h, toPixel, toBlur, e, false);
+        drawPixelated(ctx, sample, sampleCtx, fromImg, w, h, fromPixel, 1);
+        drawPixelated(ctx, sample, sampleCtx, toImg, w, h, toPixel, e);
 
         if (t < 1) {
           raf = window.requestAnimationFrame(tick);
@@ -214,11 +210,26 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       .catch(() => undefined)
       .then(run);
 
+    window.addEventListener("wheel", stop, { passive: true });
+    window.addEventListener("touchmove", stop, { passive: true });
+
     return () => {
       cancelled = true;
       window.cancelAnimationFrame(raf);
+      window.removeEventListener("wheel", stop);
+      window.removeEventListener("touchmove", stop);
     };
   }, [dissolve, reduceMotion]);
+
+  const mounted = useMemo(() => {
+    const set = new Set<number>([index]);
+    if (leaving !== null) set.add(leaving);
+    if (count > 1) {
+      set.add((index + 1) % count);
+      set.add((index - 1 + count) % count);
+    }
+    return set;
+  }, [count, index, leaving]);
 
   if (count === 0) return null;
 
@@ -231,37 +242,31 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       aria-label="Home banner"
     >
       {slides.map((slide, i) => {
+        if (!mounted.has(i)) return null;
         const active = i === index;
         const isLeaving = i === leaving;
         const show = isLeaving || (active && !dissolve);
         const desktopSrc = /mobile/i.test(slide.src) ? "" : slide.src;
         const mobileSrc = slide.mobileSrc || desktopSrc;
-        if (!desktopSrc && !mobileSrc) return null;
+        const imgSrc = desktopSrc || mobileSrc;
+        if (!imgSrc) return null;
 
         return (
           <figure key={`${slide.src}-${i}`} className={`absolute inset-0 m-0 ${show ? "z-10 opacity-100" : "z-0 opacity-0"}`}>
-            {desktopSrc ? (
+            <picture>
+              {mobileSrc && desktopSrc ? <source media={MOBILE_MQ} srcSet={mobileSrc} /> : null}
               <img
                 ref={(el) => {
-                  desktopRefs.current[i] = el;
+                  imgRefs.current[i] = el;
                 }}
-                src={desktopSrc}
+                src={imgSrc}
                 alt={slide.alt}
                 draggable={false}
-                className="hero-img-desktop absolute inset-0 h-full w-full object-cover object-center"
+                decoding="async"
+                fetchPriority={i === 0 ? "high" : "low"}
+                className="absolute inset-0 h-full w-full object-cover object-center"
               />
-            ) : null}
-            {mobileSrc ? (
-              <img
-                ref={(el) => {
-                  mobileRefs.current[i] = el;
-                }}
-                src={mobileSrc}
-                alt={slide.alt}
-                draggable={false}
-                className="hero-img-mobile absolute inset-0 h-full w-full object-cover object-center"
-              />
-            ) : null}
+            </picture>
           </figure>
         );
       })}
@@ -279,6 +284,24 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         aria-hidden="true"
       />
       <div className="hero-grain pointer-events-none absolute inset-0 z-20" aria-hidden="true" />
+
+      <div className="absolute inset-x-0 bottom-0 z-[21] grid grid-cols-2 border-t-2 border-lime bg-navy md:grid-cols-4">
+        {heroStats.map((stat, statIndex) => (
+          <div
+            key={stat.label}
+            className={`px-5 py-4 md:px-7 md:py-5 ${
+              statIndex < 3 ? "md:border-r md:border-white/15" : ""
+            } ${statIndex % 2 === 0 ? "max-md:border-r max-md:border-white/15" : ""} ${
+              statIndex < 2 ? "max-md:border-b max-md:border-white/15" : ""
+            }`}
+          >
+            <p className="font-display text-[1.75rem] leading-none font-bold tracking-tight text-lime md:text-[2rem]">
+              {stat.value}
+            </p>
+            <p className="mt-1.5 text-xs leading-snug text-white/75 md:text-[13px]">{stat.label}</p>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MarketPopup } from "@/components/MarketPopup";
 import { Main } from "@/components/Main";
+import { InPageScroll } from "@/components/InPageScroll";
 import { site } from "@/content/site";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -56,6 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
       <body className={`${figtree.variable} ${syne.variable} antialiased`}>
+        <InPageScroll />
         <a className="skip" href="#main">
           Skip to content
         </a>

@@ -36,7 +36,11 @@ export default function ContactPage() {
               {site.phone}
             </a>
           </p>
-          <p className="text-lg text-slate">LinkedIn: to be added</p>
+          <p className="text-lg">
+            <a className="font-semibold text-navy" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </p>
         </div>
         <div className="rounded-3xl bg-white p-8 sm:p-12">
           <h2 className="font-display mb-8 text-3xl">Get in touch</h2>

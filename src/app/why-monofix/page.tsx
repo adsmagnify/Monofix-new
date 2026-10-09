@@ -14,7 +14,7 @@ export default function WhyPage() {
         title="The MONOFIX difference"
         lead="Your End-to-End partner, till successful Launch !"
       />
-      <section className="bg-ink text-white">
+      <section className="bg-blue text-white">
         <div className="mx-auto max-w-[1400px] px-6 py-10 sm:px-10 lg:px-16 lg:py-12">
           <DifferenceTable />
         </div>

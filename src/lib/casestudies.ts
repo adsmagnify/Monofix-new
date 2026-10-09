@@ -10,6 +10,7 @@ export type CaseStudy = {
   id: string;
   title: string;
   area: string;
+  detail?: string;
   image?: string;
   href?: string;
   active?: boolean;
@@ -42,6 +43,7 @@ export async function getCaseStudies(): Promise<CaseStudy[]> {
           _id: string;
           title: string;
           area: string;
+          detail?: string;
           href?: string;
           accent?: CaseAccent;
           order?: number;
@@ -53,11 +55,15 @@ export async function getCaseStudies(): Promise<CaseStudy[]> {
     ]);
 
     if (rows?.length) {
+      const detailsByTitle = Object.fromEntries(
+        (studies.items as CaseStudy[]).map((item) => [item.title, item.detail]),
+      );
       return arrange(
         rows.map((row) => ({
           id: row._id,
           title: row.title,
           area: row.area,
+          detail: row.detail || detailsByTitle[row.title],
           href: row.href,
           image: urlForImage(row.image, 900) || undefined,
           accent: row.accent,

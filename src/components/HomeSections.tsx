@@ -11,12 +11,12 @@ import { SustainabilityCards } from "@/components/SustainabilityCards";
 import { TestimonialCards } from "@/components/TestimonialCards";
 import { GalleryCards } from "@/components/GalleryCards";
 import { TeamPeopleList } from "@/components/TeamGrid";
-import { site, teamHighlights } from "@/content/site";
+import { site, teamLead } from "@/content/site";
 
 export function HomeSections() {
   return (
     <>
-      <Section id="about" className="bg-paper">
+      <Section id="about" start className="scroll-mt-[calc(var(--header-h)+8px)] bg-paper">
         <SectionHead
           kicker="About us"
           title={
@@ -24,23 +24,12 @@ export function HomeSections() {
               Packaging &amp; <span className="text-blue">Design Specialists!</span>
             </>
           }
+          lead={teamLead}
         />
-        <ul className="mt-8 grid gap-3 sm:grid-cols-3">
-          {teamHighlights.map((point) => (
-            <li
-              key={point}
-              className="rounded-2xl bg-blue px-5 py-5 text-sm font-semibold leading-relaxed text-white sm:text-base"
-            >
-              {point}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-8">
-          <TeamPeopleList />
-        </div>
+        <TeamPeopleList layout="home" />
       </Section>
 
-      <Section id="why" dense className="bg-ink text-white">
+      <Section id="why" dense className="bg-blue text-white">
         <SectionHead
           compact
           light
@@ -72,17 +61,17 @@ export function HomeSections() {
         <GalleryCards />
       </Section>
 
-      <Section id="sustainability" className="bg-[linear-gradient(135deg,#0a2418_0%,#07151f_55%,#0c2c4a_100%)] text-white">
+      <Section id="sustainability" className="bg-lime">
         <SectionHead
-          light
           kicker="Sustainability & EPR"
+          kickerClassName="text-navy"
           title={
             <>
-              Packaging that <span className="text-lime">protects</span> the planet
+              Packaging that <span className="text-navy">protects</span> the planet
             </>
           }
         />
-        <SustainabilityCards />
+        <SustainabilityCards tone="onLime" />
       </Section>
 
       <Section id="testimonials" className="bg-white">
@@ -99,11 +88,11 @@ export function HomeSections() {
 
       <Section id="insights" className="bg-paper">
         <SectionHead
+          wide
           kicker="Insights & resources"
           title={
             <>
-              Trends, technology &amp;{" "}
-              <span className="text-blue">packaging education series</span>
+              Trends, technology &amp; <span className="text-blue">packaging education series</span>
             </>
           }
         />
@@ -112,17 +101,17 @@ export function HomeSections() {
         <PackagingMadeEasy />
       </Section>
 
-      <Section id="casestudies" className="bg-ink text-white">
+      <Section id="casestudies" className="bg-pink">
         <SectionHead
-          light
           kicker="Case studies"
+          kickerClassName="text-ink"
           title={
             <>
-              Unique <span className="text-lime">successes</span>
+              Unique <span className="text-navy">successes</span>
             </>
           }
         />
-        <CaseStudyCards />
+        <CaseStudyCards tone="onPink" />
       </Section>
 
       <Section id="contact" fit className="bg-paper">
@@ -161,7 +150,14 @@ export function HomeSections() {
             </div>
             <div className="rounded-2xl bg-white px-5 py-5">
               <p className="text-xs font-semibold tracking-wide text-navy uppercase">LinkedIn</p>
-              <p className="mt-2 text-sm text-slate">To be added</p>
+              <a
+                className="mt-2 block text-sm text-navy"
+                href={site.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                MONOFIX Packaging Solutions
+              </a>
             </div>
           </div>
           <div className="rounded-3xl bg-white p-6 sm:p-8">

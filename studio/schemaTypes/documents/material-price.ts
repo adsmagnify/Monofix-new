@@ -22,6 +22,7 @@ export const materialPrice = defineType({
       name: "sourceUrl",
       title: "Live price source URL",
       type: "url",
+      description: "Plastic4Trade or OfBusiness page for this grade. The site does not scrape live rates.",
     }),
     orderField,
     statusField,

@@ -18,6 +18,7 @@ export const galleryItem = defineType({
       title: "Caption",
       type: "text",
       rows: 3,
+      description: "Shown under the enlarged image. Leave blank if the visual needs no description.",
     }),
     defineField({
       name: "image",

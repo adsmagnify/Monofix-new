@@ -8,11 +8,11 @@ export function Footer() {
       <div className="mx-auto grid max-w-[1400px] gap-12 px-6 py-20 sm:px-10 md:grid-cols-4 lg:px-16">
         <div>
           <Image
-            src="/logo-grey.png"
+            src="/logo-nav.png"
             alt={site.name}
             width={360}
             height={90}
-            className="h-14 w-auto rounded-md object-contain sm:h-16"
+            className="h-14 w-auto object-contain sm:h-16"
             unoptimized
           />
           <p className="mt-5 max-w-xs text-base text-white/55">{site.tagline}</p>
@@ -51,6 +51,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/#insights" className="hover:text-lime">
+                Insights
+              </Link>
+            </li>
+            <li>
               <Link href="/#testimonials" className="hover:text-lime">
                 Clients
               </Link>
@@ -81,11 +86,6 @@ export function Footer() {
           <p className="font-display text-sm tracking-wide text-white uppercase">Resources</p>
           <ul className="mt-5 grid gap-3 text-base text-white/50">
             <li>
-              <Link href="/#insights" className="hover:text-lime">
-                Insights
-              </Link>
-            </li>
-            <li>
               <Link href="/#packaging-made-easy" className="hover:text-lime">
                 Packaging made easy
               </Link>
@@ -104,7 +104,16 @@ export function Footer() {
             © {new Date().getFullYear()} {site.legalName} · GST {site.gst}
           </p>
           <p>
-            {site.email} · {site.phone}
+            {site.email} · {site.phone} ·{" "}
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-lime">
+              LinkedIn
+            </a>
+          </p>
+          <p>
+            Created by{" "}
+            <a href="https://adsmagnify.com" target="_blank" rel="noopener noreferrer" className="hover:text-lime">
+              AdsMagnify
+            </a>
           </p>
         </div>
       </div>

@@ -31,14 +31,21 @@ export const insight = defineType({
       ],
     }),
     defineField({
-      name: "href",
-      title: "Article URL",
-      type: "url",
-    }),
-    defineField({
       name: "linkedinUrl",
       title: "LinkedIn post URL",
       type: "url",
+      description: "Clicking this insight on the website opens this LinkedIn post in a new tab.",
+      validation: (rule) =>
+        rule.uri({
+          allowRelative: false,
+          scheme: ["http", "https"],
+        }),
+    }),
+    defineField({
+      name: "href",
+      title: "Article URL",
+      type: "url",
+      description: "Optional. Used only if no LinkedIn post URL is set.",
     }),
     accentField,
     orderField,

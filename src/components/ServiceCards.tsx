@@ -69,7 +69,7 @@ export function ServiceCards({ linked = false }: Props) {
               </span>
               <p className={`font-display text-sm tracking-wide ${visual.number}`}>{service.number}</p>
             </div>
-            <h3 className="font-display mt-5 text-xl leading-tight text-ink">{service.title}</h3>
+            <h3 className="font-display mt-5 text-xl leading-[1.15] text-ink sm:text-2xl">{service.title}</h3>
             <p className="mt-3 text-sm leading-relaxed text-slate">{service.short}</p>
           </>
         );

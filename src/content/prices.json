@@ -1,8 +1,24 @@
 {
   "items": [
-    { "code": "PET", "name": "PET resin", "sourceUrl": "" },
-    { "code": "HDPE", "name": "HDPE", "sourceUrl": "" },
-    { "code": "PP", "name": "Polypropylene", "sourceUrl": "" },
-    { "code": "Kraft", "name": "Kraft paper", "sourceUrl": "" }
+    {
+      "code": "PET",
+      "name": "PET resin",
+      "sourceUrl": "https://plastic4trade.com/polymer-price-today-update-list-graph"
+    },
+    {
+      "code": "HDPE",
+      "name": "HDPE",
+      "sourceUrl": "https://www.ofbusiness.com/prices/polymers-packaging/hdpe"
+    },
+    {
+      "code": "PP",
+      "name": "Polypropylene",
+      "sourceUrl": "https://www.ofbusiness.com/prices/polymers-packaging"
+    },
+    {
+      "code": "Kraft",
+      "name": "Kraft paper",
+      "sourceUrl": "https://www.ofbusiness.com/prices/polymers-packaging"
+    }
   ]
 }

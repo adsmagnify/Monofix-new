@@ -6,6 +6,7 @@ export const site = {
   email: "sales@monofix.co.in",
   phone: "+91-9820026080",
   phoneHref: "tel:+919820026080",
+  linkedin: "https://www.linkedin.com/company/monofix-packaging-solutions/",
   responseTime: "Get in touch… we respond within 24 hours, or earlier.",
   address: {
     line1: "INNOV8 Solitaire Park",
@@ -16,61 +17,121 @@ export const site = {
   domains: ["monofix.in", "monofixllp.com", "monofixpackaging.com"],
 };
 
+export const teamLead =
+  "Five complementary experts on Packaging, together in one team — driving this transformation end-to-end !!";
+
+const marico = { src: "/about/logos/marico.webp", alt: "Marico" };
+const adityaBirla = { src: "/about/logos/Aditya_Birla.webp", alt: "Aditya Birla" };
+const iip = {
+  src: "/about/logos/Indian_Institute_of_Packaging_Logo.svg",
+  alt: "Indian Institute of Packaging",
+  caption: "IIP Mumbai",
+};
+
 export const team = [
-  {
-    name: "Krishnaprakash Iyer",
-    listName: "Prakash Iyer",
-    listOrder: 2,
-    initials: "KI",
-    linkedin: "https://www.linkedin.com/in/krishnaprakash-iyer-17228813",
-    summary: "End to end packaging R&D expertise.",
-    sectors: "FMCG | Devices | Cosmetics | Hospitality",
-    companies: "Marico | Pacific Inter | Unilever (India China UK)",
-    credential: "IIP Mumbai",
-  },
   {
     name: "Paul E. Prakash",
     listName: "Paul Prakash",
     listOrder: 1,
     initials: "PP",
+    role: "Packaging & Machinery",
+    roleIcon: "cog" as const,
+    photo: "/about/team/paul.jpg",
     linkedin: "https://www.linkedin.com/in/paul-e-prakash-95975310",
-    summary: "4 decades of experience, 33 years in Packaging, 25 years as Head of Packaging with Marico, Reliance-Retail, Dabur & Pidilite (Packaging & Machinery).",
-    sectors: "",
-    companies: "",
-    credential: "B.E (M.I.T) M.M.M.",
+    summary: "4 decades of experience, 25 years as Head of Packaging.",
+    sectors: "FMCG | Food | Personal care | Chemicals",
+    companies: "Marico | Reliance | Dabur | Pidilite",
+    companyLogos: [
+      marico,
+      { src: "/about/logos/reliance.jpg", alt: "Reliance Retail" },
+      { src: "/about/logos/dabur.png", alt: "Dabur" },
+      { src: "/about/logos/pidilite.png", alt: "Pidilite" },
+    ],
+    credential: "B.E. (Manipal Inst of Tech.), M.M.M.",
+    education: {
+      src: "/about/logos/manipal uni.webp",
+      alt: "Manipal Academy of Higher Education",
+      caption: "B.E. (Manipal Inst of Tech.), M.M.M.",
+    },
+  },
+  {
+    name: "Krishnaprakash Iyer",
+    listName: "Prakash Iyer",
+    listOrder: 2,
+    initials: "KI",
+    role: "Packaging R&D",
+    roleIcon: "flask" as const,
+    photo: "/about/team/prakash.jpg",
+    linkedin: "https://www.linkedin.com/in/krishnaprakash-iyer-17228813",
+    summary: "End-to-end packaging R&D expertise.",
+    sectors: "FMCG | Devices | Cosmetics | Hospitality",
+    companies: "Marico | Unilever (India, China, UK)",
+    companyLogos: [marico, { src: "/about/logos/unilever.webp", alt: "Unilever" }],
+    credential: "IIP Mumbai",
+    education: iip,
   },
   {
     name: "Barun Banerjee",
     listName: "Barun Banerjee",
     listOrder: 3,
     initials: "BB",
+    role: "Development & Sustainability",
+    roleIcon: "leaf" as const,
+    photo: "/about/team/barun.jpg",
     linkedin: "https://www.linkedin.com/in/barunbanerjee",
-    summary: "Packg Dev E2E, Sustainability, Flexibles.",
+    summary: "Packaging development E2E, Sustainability, Flexibles.",
     sectors: "FMCG | Cosmetics | Pharma",
-    companies: "Nestle | Himalaya | Oriflame | Ranbaxy | Jupiter",
+    companies: "Nestlé | Himalaya | Oriflame | Ranbaxy",
+    companyLogos: [
+      { src: "/about/logos/nestle.svg", alt: "Nestlé" },
+      { src: "/about/logos/The_Himalaya_Drug_Company_logo.svg.webp", alt: "Himalaya" },
+      { src: "/about/logos/oriflame.png", alt: "Oriflame" },
+      { src: "/about/logos/ranbaxy.png", alt: "Ranbaxy" },
+    ],
     credential: "IIP Mumbai",
+    education: iip,
   },
   {
-    name: "Ashutosh S Anmadwar",
+    name: "Ashutosh S. Anmadwar",
     listName: "Ashutosh Anmadwar",
     listOrder: 4,
     initials: "AA",
+    role: "Plastics & Packaging",
+    roleIcon: "hexagon" as const,
+    photo: "/about/team/ashutosh.jpg",
     linkedin: "https://www.linkedin.com/in/ashutoshanmadwar",
-    summary: "Plastics & Packaging.",
-    sectors: "",
-    companies: "Tropics Ltd | Marico | Aditya Birla Retail",
-    credential: "CIPET",
+    summary: "Moulds, Polymers, Audits & Cosmetics.",
+    sectors: "FMCG | Beauty | Retail",
+    companies: "Marico | Aditya Birla",
+    companyLogos: [marico, adityaBirla],
+    credential: "CIPET Chennai",
+    education: { src: "/about/logos/cipet.jpg", alt: "CIPET", caption: "CIPET Chennai" },
   },
   {
     name: "Anees Cementwala",
     listName: "Anees Cementwala",
     listOrder: 5,
     initials: "AC",
+    role: "Consumer-centric Design",
+    roleIcon: "pen" as const,
+    photo: "/about/team/anees.jpg",
     linkedin: "https://www.linkedin.com/in/aneescementwala",
     summary: "Consumer-centric Design and Innovation.",
-    sectors: "Packaging | Branding | Retail | Product",
-    companies: "Marico | Aditya Birla | TimesofIndia | Planet-M",
+    sectors: "Design | Research | Branding | Retail",
+    companies: "Marico | Aditya Birla | Atlas | Times of India",
+    companyLogos: [
+      marico,
+      adityaBirla,
+      { src: "/about/logos/atlas skilltech uni.png", alt: "Atlas SkillTech University" },
+      { src: "/about/logos/the-times-of-india.png", alt: "The Times of India" },
+    ],
     credential: "IIT Bombay",
+    education: {
+      src: "/about/logos/Indian_Institute_of_Technology_Bombay_Logo.webp",
+      alt: "Indian Institute of Technology Bombay",
+      caption: "IIT Bombay",
+      dark: true,
+    },
   },
 ] as const;
 
@@ -80,6 +141,13 @@ export const teamHighlights = [
   "250 years of combined experience.",
   "Spanning: FMCG, Chemicals, Lubricants, Retail & Pharma.",
   "Proven expertise of launching fresh Products and Brands from scratch.",
+] as const;
+
+export const heroStats = [
+  { value: "250+", label: "years of combined Experience" },
+  { value: "20+", label: "Leading Organisations" },
+  { value: "6", label: "Service Verticals" },
+  { value: "10+", label: "Countries with delighted Customers" },
 ] as const;
 
 /** Home banners live in `public/home/`. Replace a file with the same name to swap a slide. */
@@ -124,6 +192,7 @@ export const nav = [
   { href: "/#sustainability", id: "sustainability", label: "Sustainability" },
   { href: "/#testimonials", id: "testimonials", label: "Clients" },
   { href: "/#insights", id: "insights", label: "Insights" },
+  { href: "/#casestudies", id: "casestudies", label: "Case studies" },
   { href: "/#contact", id: "contact", label: "Contact" },
 ];
 
@@ -220,7 +289,7 @@ export const whyTable = {
     { capability: "Creative concepts", agency: true, monofix: true, vendor: false },
     { capability: "Designing", agency: true, monofix: true, vendor: false },
     { capability: "Label Graphics", agency: true, monofix: true, vendor: false },
-    { capability: "Engineering + Testing Lab", agency: false, monofix: true, vendor: true },
+    { capability: "Engineering + Testing Lab", agency: false, monofix: true, vendor: false },
     { capability: "Predictive Modelling CAE / FEA", agency: false, monofix: true, vendor: false },
     { capability: "Mould-making", agency: false, monofix: true, vendor: true },
     { capability: "Machinery, Filling", agency: false, monofix: true, vendor: true },

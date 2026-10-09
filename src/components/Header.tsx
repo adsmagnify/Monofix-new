@@ -18,7 +18,16 @@ export function Header() {
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const next = window.scrollY > 16;
+        setScrolled((prev) => (prev === next ? prev : next));
+        ticking = false;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -48,9 +57,11 @@ export function Header() {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) setActive(visible.target.id);
+        if (visible?.target.id) {
+          setActive((prev) => (prev === visible.target.id ? prev : visible.target.id));
+        }
       },
-      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 1] },
+      { rootMargin: "-42% 0px -42% 0px", threshold: [0.35] },
     );
 
     ids.forEach((id) => {
@@ -66,7 +77,7 @@ export function Header() {
       ref={headerRef}
       className={`fixed inset-x-0 top-0 z-40 transition-[background-color,border-color,box-shadow] duration-300 ${
         solid
-          ? "border-b-2 border-lime bg-navy/90 shadow-[0_10px_32px_rgba(12,44,74,0.35)] backdrop-blur-md"
+          ? "border-b-2 border-lime bg-blue shadow-[0_10px_28px_rgba(0,148,224,0.35)]"
           : "border-b-2 border-transparent bg-transparent"
       }`}
     >
@@ -125,7 +136,7 @@ export function Header() {
       </div>
 
       {open ? (
-        <nav id="mobile-nav" className="grid gap-1 bg-ink/90 px-5 py-3 backdrop-blur-md xl:hidden">
+        <nav id="mobile-nav" className="grid gap-1 bg-blue px-5 py-3 xl:hidden">
           {links.map((item) => (
             <Link
               key={item.href}

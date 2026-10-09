@@ -26,7 +26,26 @@ export type PriceItem = {
   sourceUrl?: string;
 };
 
+const PRICE_SOURCES: Record<string, string> = {
+  PET: "https://plastic4trade.com/polymer-price-today-update-list-graph",
+  HDPE: "https://www.ofbusiness.com/prices/polymers-packaging/hdpe",
+  PP: "https://www.ofbusiness.com/prices/polymers-packaging",
+  Kraft: "https://www.ofbusiness.com/prices/polymers-packaging",
+};
+
+function withPriceSource(item: PriceItem): PriceItem {
+  return {
+    ...item,
+    sourceUrl: item.sourceUrl || PRICE_SOURCES[item.code],
+  };
+}
+
 const ACCENTS: InsightAccent[] = ["blue", "lime", "pink", "navy"];
+
+function cleanUrl(value?: string) {
+  const url = value?.trim();
+  return url ? url : undefined;
+}
 
 function arrangeInsights(items: InsightItem[], max: number): InsightItem[] {
   return [...items]
@@ -38,6 +57,8 @@ function arrangeInsights(items: InsightItem[], max: number): InsightItem[] {
     .slice(0, max)
     .map((item, index) => ({
       ...item,
+      href: cleanUrl(item.href),
+      linkedinUrl: cleanUrl(item.linkedinUrl),
       accent: item.accent ?? ACCENTS[index % ACCENTS.length],
     }));
 }
@@ -85,7 +106,7 @@ export async function getInsights(): Promise<InsightItem[]> {
 export async function getPrices(): Promise<PriceItem[]> {
   if (isSanityConfigured()) {
     const rows = await sanityQuery<PriceItem[]>(MATERIAL_PRICES_QUERY);
-    if (rows?.length) return rows;
+    if (rows?.length) return rows.map(withPriceSource);
   }
-  return prices.items as PriceItem[];
+  return (prices.items as PriceItem[]).map(withPriceSource);
 }

@@ -21,6 +21,13 @@ export const caseStudy = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "detail",
+      title: "Detail",
+      type: "text",
+      rows: 5,
+      description: "Shown under the image when the case study is opened, like the gallery caption.",
+    }),
+    defineField({
       name: "image",
       type: "image",
       options: { hotspot: true },
