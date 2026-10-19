@@ -84,7 +84,7 @@ export function Header({ mode = "solid" }: HeaderProps) {
       className={`fixed inset-x-0 top-0 z-40 transition-[background-color,border-color,box-shadow] duration-300 ${
         solid
           ? "border-b-2 border-lime bg-blue shadow-[0_10px_28px_rgba(0,148,224,0.35)]"
-          : "border-b-2 border-transparent bg-transparent"
+          : "border-b-2 border-lime bg-blue md:border-transparent md:bg-transparent md:shadow-none"
       }`}
     >
       <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-8 sm:py-4 lg:px-10 lg:py-5">

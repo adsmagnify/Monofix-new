@@ -264,7 +264,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                 draggable={false}
                 decoding="async"
                 fetchPriority={i === 0 ? "high" : "low"}
-                className="absolute inset-0 h-full w-full object-cover object-center"
+                className="absolute inset-0 h-full w-full object-cover object-center max-md:top-[var(--header-h)] max-md:h-[calc(100%-var(--header-h))] max-md:object-top"
               />
             </picture>
           </figure>
@@ -278,6 +278,10 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         aria-hidden="true"
       />
 
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-[14] h-[var(--header-h)] bg-blue md:hidden"
+        aria-hidden="true"
+      />
       <div className="pointer-events-none absolute inset-0 z-[13] hidden bg-ink/20 md:block" aria-hidden="true" />
       <div
         className="absolute inset-x-0 top-0 z-[13] hidden h-36 bg-gradient-to-b from-ink/55 to-transparent md:block"
