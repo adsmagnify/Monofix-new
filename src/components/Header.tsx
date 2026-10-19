@@ -83,18 +83,18 @@ export function Header({ mode = "solid" }: HeaderProps) {
       ref={headerRef}
       className={`fixed inset-x-0 top-0 z-40 transition-[background-color,border-color,box-shadow] duration-300 ${
         solid
-          ? "border-b-2 border-lime bg-blue shadow-[0_10px_28px_rgba(0,148,224,0.35)]"
-          : "border-b-2 border-lime bg-blue md:border-transparent md:bg-transparent md:shadow-none"
+          ? "border-b border-lime bg-blue md:border-b-2 md:shadow-[0_10px_28px_rgba(0,148,224,0.35)]"
+          : "border-b border-lime bg-blue md:border-b-2 md:border-transparent md:bg-transparent md:shadow-none"
       }`}
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-8 sm:py-4 lg:px-10 lg:py-5">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-1.5 sm:gap-4 sm:px-8 sm:py-4 lg:px-10 lg:py-5">
         <Link href="/#hero" className="flex min-w-0 shrink-0 items-center" onClick={() => setOpen(false)}>
           <Image
             src="/logo-nav.png"
             alt={site.name}
             width={480}
             height={120}
-            className="h-9 w-auto max-w-[160px] object-contain sm:h-12 sm:max-w-[260px]"
+            className="h-7 w-auto max-w-[132px] object-contain sm:h-12 sm:max-w-[260px]"
             priority
             unoptimized
           />
@@ -127,7 +127,7 @@ export function Header({ mode = "solid" }: HeaderProps) {
 
         <button
           type="button"
-          className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/30 xl:hidden"
+          className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-white/30 sm:h-11 sm:w-11 xl:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}

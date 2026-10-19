@@ -270,7 +270,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   draggable={false}
                   decoding="async"
                   fetchPriority={i === 0 ? "high" : "low"}
-                  className="absolute inset-0 size-full max-w-none object-cover object-center"
+                  className="absolute inset-0 size-full max-w-none object-cover object-top md:object-center"
                 />
               </picture>
             </figure>
@@ -292,20 +292,18 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         <div className="hero-grain pointer-events-none absolute inset-0 z-20 md:block" aria-hidden="true" />
       </div>
 
-      <div className="relative z-[21] grid shrink-0 grid-cols-2 border-t-2 border-lime bg-navy md:absolute md:inset-x-0 md:bottom-0 md:grid-cols-4">
+      <div className="relative z-[21] grid shrink-0 grid-cols-4 border-t border-lime bg-navy md:absolute md:inset-x-0 md:bottom-0 md:border-t-2">
         {heroStats.map((stat, statIndex) => (
           <div
             key={stat.label}
-            className={`px-3 py-3 sm:px-5 sm:py-4 md:px-7 md:py-5 ${
-              statIndex < 3 ? "md:border-r md:border-white/15" : ""
-            } ${statIndex % 2 === 0 ? "max-md:border-r max-md:border-white/15" : ""} ${
-              statIndex < 2 ? "max-md:border-b max-md:border-white/15" : ""
+            className={`px-1.5 py-1.5 sm:px-5 sm:py-4 md:px-7 md:py-5 ${
+              statIndex < 3 ? "border-r border-white/15" : ""
             }`}
           >
-            <p className="text-[1.45rem] leading-none font-extrabold tracking-normal text-lime sm:text-[1.75rem] md:text-[2rem]">
+            <p className="text-[1.05rem] leading-none font-extrabold tracking-normal text-lime sm:text-[1.75rem] md:text-[2rem]">
               {stat.value}
             </p>
-            <p className="mt-1.5 text-[11px] leading-snug tracking-normal text-white/75 sm:text-xs md:max-w-[16rem] md:text-[13px]">
+            <p className="mt-0.5 text-[8px] leading-tight tracking-normal text-white/75 sm:mt-1.5 sm:text-xs md:max-w-[16rem] md:text-[13px]">
               {stat.label}
             </p>
           </div>
