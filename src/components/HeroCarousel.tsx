@@ -69,6 +69,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
   const [reduceMotion, setReduceMotion] = useState(false);
 
   const frameRef = useRef<HTMLElement>(null);
+  const mediaRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
   const leavingRef = useRef<number | null>(null);
@@ -89,11 +90,12 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
   }, [index]);
 
   useEffect(() => {
-    const frame = frameRef.current;
-    if (!frame) return;
+    const section = frameRef.current;
+    const media = mediaRef.current;
+    if (!section || !media) return;
 
     const measure = () => {
-      const rect = frame.getBoundingClientRect();
+      const rect = media.getBoundingClientRect();
       sizeRef.current = {
         w: Math.max(1, Math.round(rect.width)),
         h: Math.max(1, Math.round(rect.height)),
@@ -107,10 +109,10 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       },
       { threshold: [0, 0.2, 0.5] },
     );
-    io.observe(frame);
+    io.observe(section);
 
     const ro = new ResizeObserver(measure);
-    ro.observe(frame);
+    ro.observe(media);
 
     return () => {
       io.disconnect();
@@ -124,7 +126,10 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       if (!inViewRef.current || document.hidden) return;
       setIndex((current) => {
         const next = (current + 1) % count;
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const mobile = window.matchMedia(MOBILE_MQ).matches;
+        // Pixel dissolve remaps the crop vs the <img>; skip it on phones so slides stay put.
+        if (!reduce && !mobile) {
           leavingRef.current = current;
           setLeaving(current);
           setDissolve(true);
@@ -224,10 +229,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
   const mounted = useMemo(() => {
     const set = new Set<number>([index]);
     if (leaving !== null) set.add(leaving);
-    if (count > 1) {
-      set.add((index + 1) % count);
-      set.add((index - 1 + count) % count);
-    }
+    if (count > 1) set.add((index + 1) % count);
     return set;
   }, [count, index, leaving]);
 
@@ -237,59 +239,60 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
     <section
       ref={frameRef}
       id="hero"
-      className="hero-viewport relative h-svh min-h-screen w-full overflow-hidden bg-ink"
+      className="hero-viewport relative flex h-dvh w-full flex-col overflow-hidden bg-blue max-md:pt-[var(--header-h)] md:block md:bg-ink md:pt-0"
       aria-roledescription="carousel"
       aria-label="Home banner"
     >
-      {slides.map((slide, i) => {
-        if (!mounted.has(i)) return null;
-        const active = i === index;
-        const isLeaving = i === leaving;
-        const show = isLeaving || (active && !dissolve);
-        const desktopSrc = /mobile/i.test(slide.src) ? "" : slide.src;
-        const mobileSrc = slide.mobileSrc || desktopSrc;
-        const imgSrc = desktopSrc || mobileSrc;
-        if (!imgSrc) return null;
+      <div ref={mediaRef} className="relative min-h-0 w-full flex-1 md:absolute md:inset-0">
+        {slides.map((slide, i) => {
+          if (!mounted.has(i)) return null;
+          const active = i === index;
+          const isLeaving = i === leaving;
+          const show = isLeaving || (active && !dissolve);
+          const desktopSrc = /mobile/i.test(slide.src) ? "" : slide.src;
+          const mobileSrc = slide.mobileSrc || desktopSrc;
+          const imgSrc = desktopSrc || mobileSrc;
+          if (!imgSrc) return null;
 
-        return (
-          <figure key={`${slide.src}-${i}`} className={`absolute inset-0 m-0 ${show ? "z-10 opacity-100" : "z-0 opacity-0"}`}>
-            <picture>
-              {mobileSrc && desktopSrc ? <source media={MOBILE_MQ} srcSet={mobileSrc} /> : null}
-              <img
-                ref={(el) => {
-                  imgRefs.current[i] = el;
-                }}
-                src={imgSrc}
-                alt={slide.alt}
-                draggable={false}
-                decoding="async"
-                fetchPriority={i === 0 ? "high" : "low"}
-                className="absolute inset-0 h-full w-full object-cover object-center max-md:top-[var(--header-h)] max-md:h-[calc(100%-var(--header-h))] max-md:object-top"
-              />
-            </picture>
-          </figure>
-        );
-      })}
+          return (
+            <figure
+              key={`${slide.src}-${i}`}
+              className={`absolute inset-0 m-0 bg-blue ${(dissolve ? show : active) ? "z-10 opacity-100" : "z-0 opacity-0"}`}
+            >
+              <picture>
+                {mobileSrc && desktopSrc ? <source media={MOBILE_MQ} srcSet={mobileSrc} /> : null}
+                <img
+                  ref={(el) => {
+                    imgRefs.current[i] = el;
+                  }}
+                  src={imgSrc}
+                  alt={slide.alt}
+                  draggable={false}
+                  decoding="async"
+                  fetchPriority={i === 0 ? "high" : "low"}
+                  className="absolute inset-0 size-full max-w-none object-cover object-center"
+                />
+              </picture>
+            </figure>
+          );
+        })}
 
-      <canvas
-        ref={canvasRef}
-        className="pointer-events-none absolute inset-0 z-[12] h-full w-full"
-        style={{ opacity: dissolve ? 1 : 0, transition: "none" }}
-        aria-hidden="true"
-      />
+        <canvas
+          ref={canvasRef}
+          className="pointer-events-none absolute inset-0 z-[12] h-full w-full"
+          style={{ opacity: dissolve ? 1 : 0, transition: "none" }}
+          aria-hidden="true"
+        />
 
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 z-[14] h-[var(--header-h)] bg-blue md:hidden"
-        aria-hidden="true"
-      />
-      <div className="pointer-events-none absolute inset-0 z-[13] hidden bg-ink/20 md:block" aria-hidden="true" />
-      <div
-        className="absolute inset-x-0 top-0 z-[13] hidden h-36 bg-gradient-to-b from-ink/55 to-transparent md:block"
-        aria-hidden="true"
-      />
-      <div className="hero-grain pointer-events-none absolute inset-0 z-20" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-0 z-[13] hidden bg-ink/20 md:block" aria-hidden="true" />
+        <div
+          className="absolute inset-x-0 top-0 z-[13] hidden h-36 bg-gradient-to-b from-ink/55 to-transparent md:block"
+          aria-hidden="true"
+        />
+        <div className="hero-grain pointer-events-none absolute inset-0 z-20 md:block" aria-hidden="true" />
+      </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-[21] grid grid-cols-2 border-t-2 border-lime bg-navy md:grid-cols-4">
+      <div className="relative z-[21] grid shrink-0 grid-cols-2 border-t-2 border-lime bg-navy md:absolute md:inset-x-0 md:bottom-0 md:grid-cols-4">
         {heroStats.map((stat, statIndex) => (
           <div
             key={stat.label}

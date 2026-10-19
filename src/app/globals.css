@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --header-h: 6.75rem;
+  --header-h: 4rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -38,6 +38,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-h: 5.5rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -119,12 +125,18 @@ iframe {
   max-width: 100%;
 }
 
+.hero-viewport img {
+  max-width: none;
+}
+
 .screen-full {
   min-height: calc(100svh - var(--header-h));
 }
 
 .hero-viewport {
-  min-height: 100svh;
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
 }
 
 .screen-fit {
