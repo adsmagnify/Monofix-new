@@ -127,6 +127,13 @@ iframe {
 
 .hero-viewport img {
   max-width: none;
+  object-position: var(--hero-mobile-pos, center top);
+}
+
+@media (min-width: 768px) {
+  .hero-viewport img {
+    object-position: center;
+  }
 }
 
 .screen-full {

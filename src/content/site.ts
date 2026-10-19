@@ -161,31 +161,37 @@ export const homeSlides = [
     src: "/home/one-carousel.jpg",
     mobileSrc: "/home/one-carousel-mobile.png",
     alt: "Innovative packaging solutions that mean business",
+    mobilePosition: "center 16%",
   },
   {
     src: "/home/twoo-carousel.png",
-    mobileSrc: "/home/twoo-carousel-mobile.png",
+    mobileSrc: "/home/twoo-carousel-mobilee.png",
     alt: "From a complex packaging problem to a launch that grows the brand",
+    mobilePosition: "center 50%",
   },
   {
     src: "/home/three-carousel.png",
     mobileSrc: "/home/three-carousel-mobile.png",
     alt: "Innovative packaging solutions — a clear path through complexity",
+    mobilePosition: "center 22%",
   },
   {
     src: "/home/four-carousel.png",
     mobileSrc: "/home/four-carousel-mobile.png",
     alt: "Innovative packaging solutions that mean business",
+    mobilePosition: "center 20%",
   },
   {
     src: "/home/five-carousel.png",
     mobileSrc: "/home/five-carousel-mobile.png",
     alt: "Smarter, sustainable, impactful packaging",
+    mobilePosition: "center 14%",
   },
   {
     src: "/home/six-carousel.png",
     mobileSrc: "/home/six-carousel-mobile.png",
     alt: "Over 70 percent of consumers prefer sustainable packaging",
+    mobilePosition: "center 20%",
   },
 ] as const;
 

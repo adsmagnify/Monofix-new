@@ -3,7 +3,31 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { heroStats } from "@/content/site";
 
-type HomeSlide = { src: string; mobileSrc?: string; alt: string };
+type HomeSlide = { src: string; mobileSrc?: string; alt: string; mobilePosition?: string };
+
+function mobileObjectPosition(slide: HomeSlide) {
+  if (slide.mobilePosition) return slide.mobilePosition;
+  const key = `${slide.src} ${slide.mobileSrc ?? ""} ${slide.alt}`.toLowerCase();
+  if (key.includes("twoo") || key.includes("complex packaging problem") || key.includes("grows the brand")) {
+    return "center 50%";
+  }
+  if (key.includes("three-carousel") || key.includes("clear path")) {
+    return "center 22%";
+  }
+  if (key.includes("one-carousel") || key.includes("mean business !!")) {
+    return "center 16%";
+  }
+  if (key.includes("four-carousel")) {
+    return "center 20%";
+  }
+  if (key.includes("five-carousel") || key.includes("smarter, sustainable")) {
+    return "center 14%";
+  }
+  if (key.includes("six-carousel") || key.includes("70 percent") || key.includes("70%")) {
+    return "center 20%";
+  }
+  return "center top";
+}
 
 type HeroCarouselProps = {
   slides: HomeSlide[];
@@ -270,7 +294,8 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   draggable={false}
                   decoding="async"
                   fetchPriority={i === 0 ? "high" : "low"}
-                  className="absolute inset-0 size-full max-w-none object-cover object-top md:object-center"
+                  className="hero-slide-img absolute inset-0 size-full max-w-none object-cover"
+                  style={{ ["--hero-mobile-pos" as string]: mobileObjectPosition(slide) }}
                 />
               </picture>
             </figure>

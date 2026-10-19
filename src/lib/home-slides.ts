@@ -6,7 +6,12 @@ import { sanityQuery } from "@/sanity/lib/fetch";
 import { urlForImage } from "@/sanity/lib/image";
 import { HOME_BANNERS_QUERY } from "@/sanity/lib/queries";
 
-export type HomeSlide = { src: string; mobileSrc?: string; alt: string };
+export type HomeSlide = {
+  src: string;
+  mobileSrc?: string;
+  alt: string;
+  mobilePosition?: string;
+};
 
 const WORD_ORDER: Record<string, number> = {
   one: 1,
@@ -86,10 +91,12 @@ function localHomeSlides(): HomeSlide[] {
   if (desktop.length > 0) {
     return desktop.map((name, index) => {
       const src = `/home/${name}`;
+      const fromSite = homeSlides.find((slide) => slide.src === src);
       return {
         src,
         mobileSrc: mobileByStem.get(stem(name)),
         alt: altBySrc[src] ?? `MONOFIX home banner ${index + 1}`,
+        mobilePosition: fromSite?.mobilePosition,
       };
     });
   }
@@ -173,6 +180,7 @@ export async function getHomeSlides(): Promise<HomeSlide[]> {
             src: desktopSrc || local[index]?.src || "",
             mobileSrc: slide.sanityMobile || localMobile[index] || local[index]?.mobileSrc,
             alt: slide.alt,
+            mobilePosition: local[index]?.mobilePosition ?? homeSlides[index]?.mobilePosition,
           };
         })
         .filter((slide) => slide.src) ?? [];
