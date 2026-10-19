@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Figtree, Syne, Geist } from "next/font/google";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -17,6 +17,12 @@ const syne = Syne({
   subsets: ["latin"],
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://monofixpackaging.com"),
@@ -50,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html lang="en" className={cn("font-sans", figtree.variable, geist.variable)}>
       <body className={`${figtree.variable} ${syne.variable} antialiased`}>
         {children}
       </body>

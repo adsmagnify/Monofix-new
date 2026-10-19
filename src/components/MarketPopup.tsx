@@ -23,7 +23,7 @@ export function MarketPopup() {
 
   return (
     <aside
-      className="fixed top-1/2 right-4 z-50 w-[min(100%-2rem,22rem)] -translate-y-1/2 rounded-2xl border border-white/15 bg-navy p-6 text-white shadow-[0_24px_60px_rgba(7,21,31,0.45)] sm:right-8"
+      className="fixed inset-x-3 bottom-3 z-50 max-h-[min(85svh,36rem)] w-auto overflow-y-auto rounded-2xl border border-white/15 bg-navy p-5 text-white shadow-[0_24px_60px_rgba(7,21,31,0.45)] sm:inset-x-auto sm:top-1/2 sm:right-8 sm:bottom-auto sm:w-[min(100%-2rem,22rem)] sm:-translate-y-1/2 sm:p-6 [padding-bottom:max(1.25rem,env(safe-area-inset-bottom))] sm:[padding-bottom:1.5rem]"
       role="dialog"
       aria-labelledby="geo-popup-title"
     >
@@ -35,7 +35,7 @@ export function MarketPopup() {
       >
         ×
       </button>
-      <h2 id="geo-popup-title" className="font-display pr-8 text-2xl leading-tight">
+      <h2 id="geo-popup-title" className="font-display pr-8 text-xl leading-tight sm:text-2xl">
         {popup.title}
       </h2>
       <p className="mt-4 text-base leading-relaxed text-white/80">{popup.body}</p>

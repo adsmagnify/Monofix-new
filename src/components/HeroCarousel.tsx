@@ -289,16 +289,18 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         {heroStats.map((stat, statIndex) => (
           <div
             key={stat.label}
-            className={`px-5 py-4 md:px-7 md:py-5 ${
+            className={`px-3 py-3 sm:px-5 sm:py-4 md:px-7 md:py-5 ${
               statIndex < 3 ? "md:border-r md:border-white/15" : ""
             } ${statIndex % 2 === 0 ? "max-md:border-r max-md:border-white/15" : ""} ${
               statIndex < 2 ? "max-md:border-b max-md:border-white/15" : ""
             }`}
           >
-            <p className="font-display text-[1.75rem] leading-none font-bold tracking-tight text-lime md:text-[2rem]">
+            <p className="text-[1.45rem] leading-none font-extrabold tracking-normal text-lime sm:text-[1.75rem] md:text-[2rem]">
               {stat.value}
             </p>
-            <p className="mt-1.5 text-xs leading-snug text-white/75 md:text-[13px]">{stat.label}</p>
+            <p className="mt-1.5 text-[11px] leading-snug tracking-normal text-white/75 sm:text-xs md:max-w-[16rem] md:text-[13px]">
+              {stat.label}
+            </p>
           </div>
         ))}
       </div>

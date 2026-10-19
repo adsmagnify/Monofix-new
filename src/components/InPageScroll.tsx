@@ -2,8 +2,39 @@
 
 import { useEffect } from "react";
 
+function scrollToSection(id: string, behavior: ScrollBehavior) {
+  if (!id || id === "hero") {
+    window.scrollTo({ top: 0, behavior });
+    return;
+  }
+
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const header = document.querySelector("header");
+  const bar = header?.firstElementChild;
+  const headerBottom =
+    bar instanceof HTMLElement
+      ? bar.getBoundingClientRect().bottom +
+        (header instanceof HTMLElement ? parseFloat(getComputedStyle(header).borderBottomWidth) || 0 : 0)
+      : header instanceof HTMLElement
+        ? header.getBoundingClientRect().bottom
+        : 0;
+
+  const delta = Math.round(el.getBoundingClientRect().top - headerBottom);
+  if (delta !== 0) {
+    window.scrollBy({ top: delta, behavior });
+  }
+}
+
 export function InPageScroll() {
   useEffect(() => {
+    const go = (id: string, behavior: ScrollBehavior) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToSection(id, behavior));
+      });
+    };
+
     const onClick = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -17,18 +48,34 @@ export function InPageScroll() {
 
       const id = decodeURIComponent(url.hash.replace(/^#/, ""));
       if (!id) return;
-      const el = document.getElementById(id);
-      if (!el) return;
+      if (!document.getElementById(id) && id !== "hero") return;
 
       event.preventDefault();
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      go(id, "smooth");
       if (url.hash !== window.location.hash) {
         history.pushState(null, "", url.hash);
       }
     };
 
+    const onHash = () => {
+      const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+      if (id) go(id, "auto");
+    };
+
     document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
+    window.addEventListener("hashchange", onHash);
+    window.addEventListener("popstate", onHash);
+
+    if (window.location.hash) {
+      window.scrollTo(0, 0);
+      go(decodeURIComponent(window.location.hash.replace(/^#/, "")), "auto");
+    }
+
+    return () => {
+      document.removeEventListener("click", onClick);
+      window.removeEventListener("hashchange", onHash);
+      window.removeEventListener("popstate", onHash);
+    };
   }, []);
 
   return null;

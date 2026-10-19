@@ -9,6 +9,7 @@ import { PriceTiles } from "@/components/PriceTiles";
 import { ServiceCards } from "@/components/ServiceCards";
 import { SustainabilityCards } from "@/components/SustainabilityCards";
 import { TestimonialCards } from "@/components/TestimonialCards";
+// import { LogoTicker } from "@/components/LogoTicker";
 import { GalleryCards } from "@/components/GalleryCards";
 import { TeamPeopleList } from "@/components/TeamGrid";
 import { site, teamLead } from "@/content/site";
@@ -16,9 +17,10 @@ import { site, teamLead } from "@/content/site";
 export function HomeSections() {
   return (
     <>
-      <Section id="about" start className="scroll-mt-[calc(var(--header-h)+8px)] bg-paper">
+      <Section id="about" start className="bg-[#f6f7f8]">
         <SectionHead
           kicker="About us"
+          wideLead
           title={
             <>
               Packaging &amp; <span className="text-blue">Design Specialists!</span>
@@ -74,6 +76,7 @@ export function HomeSections() {
         <SustainabilityCards tone="onLime" />
       </Section>
 
+      {/* Restore when client logos are ready: hug className="bg-white" bottom={<LogoTicker />} */}
       <Section id="testimonials" className="bg-white">
         <SectionHead
           kicker="Client testimonials"
@@ -138,9 +141,13 @@ export function HomeSections() {
             </div>
             <div className="rounded-2xl bg-white px-5 py-5">
               <p className="text-xs font-semibold tracking-wide text-navy uppercase">Email</p>
-              <a className="mt-2 block text-sm text-navy" href={`mailto:${site.email}`}>
-                {site.email}
-              </a>
+              <div className="mt-2 space-y-1">
+                {site.emails.map((email) => (
+                  <a key={email} className="block break-all text-sm text-navy sm:break-normal" href={`mailto:${email}`}>
+                    {email}
+                  </a>
+                ))}
+              </div>
             </div>
             <div className="rounded-2xl bg-white px-5 py-5">
               <p className="text-xs font-semibold tracking-wide text-navy uppercase">Mobile</p>

@@ -4,7 +4,7 @@ export async function PriceTiles() {
   const items = await getPrices();
 
   return (
-    <div className="mt-8 rounded-2xl bg-navy p-6 text-white">
+    <div className="mt-8 rounded-2xl bg-navy p-4 text-white sm:p-6">
       <p className="text-xs font-semibold tracking-[0.2em] text-lime uppercase">Live material prices</p>
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {items.map((item) => {

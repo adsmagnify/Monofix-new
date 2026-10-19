@@ -39,7 +39,7 @@ export async function TestimonialCards() {
   const stories = await getClientStories();
 
   return (
-    <div className="mt-10 grid gap-5 lg:grid-cols-3">
+    <div className="mt-8 grid gap-4 sm:mt-10 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
       {stories.map((item, index) => {
         const highlighted = Boolean(item.highlight);
         const visual = accents[item.accent ?? "blue"];
@@ -47,7 +47,7 @@ export async function TestimonialCards() {
         return (
           <blockquote
             key={item.id}
-            className={`relative overflow-hidden rounded-2xl border p-6 pt-7 transition-colors duration-200 ${
+            className={`relative flex h-full flex-col overflow-hidden rounded-2xl border p-6 pt-7 transition-colors duration-200 ${
               highlighted
                 ? "border-lime bg-lime text-ink"
                 : `bg-white ${visual.card}`
@@ -84,9 +84,15 @@ export async function TestimonialCards() {
             <p className={`mt-4 text-sm leading-relaxed ${highlighted ? "text-ink/80" : "text-slate"}`}>
               &ldquo;{item.quote}&rdquo;
             </p>
-            <footer className={`mt-5 text-sm font-medium ${highlighted ? "text-ink" : "text-navy"}`}>
-              — {item.role}
-            </footer>
+            {item.role ? (
+              <footer
+                className={`mt-auto pt-5 text-[12px] font-medium sm:text-sm lg:whitespace-nowrap ${
+                  highlighted ? "text-ink" : "text-navy"
+                }`}
+              >
+                — {item.role}
+              </footer>
+            ) : null}
           </blockquote>
         );
       })}

@@ -28,10 +28,14 @@ export default function ContactPage() {
             <strong>Locations:</strong> {site.locations.join(", ")}
           </p>
           <p className="text-lg">
-            <a className="font-semibold text-navy" href={`mailto:${site.email}`}>
-              {site.email}
-            </a>
-            <br />
+            {site.emails.map((email) => (
+              <span key={email}>
+                <a className="break-all font-semibold text-navy sm:break-normal" href={`mailto:${email}`}>
+                  {email}
+                </a>
+                <br />
+              </span>
+            ))}
             <a className="font-semibold text-navy" href={site.phoneHref}>
               {site.phone}
             </a>

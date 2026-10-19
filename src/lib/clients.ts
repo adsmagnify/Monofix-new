@@ -9,7 +9,7 @@ export type ClientStory = {
   id: string;
   title: string;
   quote: string;
-  role: string;
+  role?: string;
   active?: boolean;
   highlight?: boolean;
   accent?: ClientAccent;
@@ -50,14 +50,16 @@ type SanityClient = {
 };
 
 export async function getClientStories(): Promise<ClientStory[]> {
-  if (!isSanityConfigured()) return fromJson();
+  const local = fromJson();
+  if (local.length) return local;
+  if (!isSanityConfigured()) return local;
 
   const [rows, settings] = await Promise.all([
     sanityQuery<SanityClient[]>(CLIENT_STORIES_QUERY),
     sanityQuery<{ clientsToShow?: number }>(SITE_SETTINGS_QUERY),
   ]);
 
-  if (!rows?.length) return fromJson();
+  if (!rows?.length) return local;
 
   return arrange(
     rows.map((row) => ({

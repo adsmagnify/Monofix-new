@@ -56,7 +56,7 @@ export function DifferenceTable() {
   return (
     <div className="mt-5 flex justify-center">
       <div className="w-full max-w-[720px] overflow-x-auto overscroll-x-contain rounded-2xl bg-navy/30 shadow-[0_18px_40px_rgba(7,21,31,0.18)] ring-1 ring-white/20">
-        <table className="w-full table-fixed border-collapse">
+        <table className="w-full min-w-[540px] table-fixed border-collapse sm:min-w-0">
           <caption className="sr-only">What MONOFIX covers versus a design house and a vendor</caption>
           <colgroup>
             <col className="w-[31%]" />
@@ -69,7 +69,7 @@ export function DifferenceTable() {
                 <p className="text-[9px] font-semibold tracking-[0.14em] text-white/55 uppercase whitespace-nowrap sm:text-[10px]">
                   They start
                 </p>
-                <p className="font-display mt-1 text-[13px] leading-[1.15] font-bold text-white sm:text-[16px]">
+                <p className="mt-1 text-[13px] leading-[1.2] font-bold tracking-normal text-white sm:text-[16px]">
                   Design house /
                   <br />
                   Ad. agency
@@ -79,13 +79,13 @@ export function DifferenceTable() {
                 <p className="text-[9px] font-semibold tracking-[0.14em] uppercase whitespace-nowrap sm:text-[10px]">
                   The full process
                 </p>
-                <p className="font-display mt-1 text-[13px] leading-[1.15] font-bold sm:text-[16px]">★ MONOFIX</p>
+                <p className="mt-1 text-[13px] leading-[1.2] font-bold tracking-normal sm:text-[16px]">★ MONOFIX</p>
               </th>
               <th scope="col" className="bg-navy px-2 py-3 text-left font-normal sm:px-3 sm:py-3.5">
                 <p className="text-[9px] font-semibold tracking-[0.14em] text-white/55 uppercase whitespace-nowrap sm:text-[10px]">
                   They finish
                 </p>
-                <p className="font-display mt-1 text-[13px] leading-[1.15] font-bold text-white sm:text-[16px]">
+                <p className="mt-1 text-[13px] leading-[1.2] font-bold tracking-normal text-white sm:text-[16px]">
                   Vendor /
                   <br />
                   Engineering co.

@@ -39,15 +39,17 @@ export function Header({ mode = "solid" }: HeaderProps) {
 
   useEffect(() => {
     const el = headerRef.current;
-    if (!el) return;
+    const bar = el?.firstElementChild;
+    if (!(el instanceof HTMLElement) || !(bar instanceof HTMLElement)) return;
     const setHeight = () => {
-      document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
+      const border = parseFloat(getComputedStyle(el).borderBottomWidth) || 0;
+      document.documentElement.style.setProperty("--header-h", `${Math.round(bar.offsetHeight + border)}px`);
     };
     setHeight();
     const observer = new ResizeObserver(setHeight);
-    observer.observe(el);
+    observer.observe(bar);
     return () => observer.disconnect();
-  }, [open, solid]);
+  }, [solid]);
 
   useEffect(() => {
     if (!isHome) {
@@ -85,14 +87,14 @@ export function Header({ mode = "solid" }: HeaderProps) {
           : "border-b-2 border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-10 lg:py-5">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-8 sm:py-4 lg:px-10 lg:py-5">
         <Link href="/#hero" className="flex min-w-0 shrink-0 items-center" onClick={() => setOpen(false)}>
           <Image
             src="/logo-nav.png"
             alt={site.name}
             width={480}
             height={120}
-            className="h-11 w-auto max-w-[220px] object-contain sm:h-12 sm:max-w-[260px]"
+            className="h-9 w-auto max-w-[160px] object-contain sm:h-12 sm:max-w-[260px]"
             priority
             unoptimized
           />

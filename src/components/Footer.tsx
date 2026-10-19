@@ -5,7 +5,7 @@ import { services, site } from "@/content/site";
 export function Footer() {
   return (
     <footer className="bg-ink text-white">
-      <div className="mx-auto grid max-w-[1400px] gap-12 px-6 py-20 sm:px-10 md:grid-cols-4 lg:px-16">
+      <div className="mx-auto grid max-w-[1400px] gap-10 px-4 py-14 sm:grid-cols-2 sm:px-10 sm:py-20 lg:grid-cols-4 lg:px-16">
         <div>
           <Image
             src="/logo-nav.png"
@@ -103,11 +103,22 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {site.legalName} · GST {site.gst}
           </p>
-          <p>
-            {site.email} · {site.phone} ·{" "}
-            <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-lime">
-              LinkedIn
-            </a>
+          <p className="flex flex-col gap-1 sm:block">
+            {site.emails.map((email, i) => (
+              <span key={email}>
+                {i > 0 ? <span className="hidden sm:inline"> · </span> : null}
+                <a href={`mailto:${email}`} className="break-all hover:text-lime">
+                  {email}
+                </a>
+              </span>
+            ))}
+            <span>
+              <span className="hidden sm:inline"> · </span>
+              {site.phone} ·{" "}
+              <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-lime">
+                LinkedIn
+              </a>
+            </span>
           </p>
           <p>
             Created by{" "}

@@ -3,7 +3,8 @@ export const site = {
   legalName: "MONOFIX Solutions LLP",
   tagline: "Innovative Packaging Solutions that mean Business !!",
   hashtags: ["Packaging", "Innovation", "Sustainability"],
-  email: "sales@monofix.co.in",
+  email: "Sales@monofix.co.in",
+  emails: ["Sales@monofix.co.in", "anees.cementwala@monofix.co.in"],
   phone: "+91-9820026080",
   phoneHref: "tel:+919820026080",
   linkedin: "https://www.linkedin.com/company/monofix-packaging-solutions/",
@@ -18,14 +19,14 @@ export const site = {
 };
 
 export const teamLead =
-  "Five complementary experts on Packaging, together in one team — driving this transformation end-to-end !!";
+  "Five complementary experts on Packaging, together in one team! … Driving this transformation end-to-end !!";
 
 const marico = { src: "/about/logos/marico.webp", alt: "Marico" };
 const adityaBirla = { src: "/about/logos/Aditya_Birla.webp", alt: "Aditya Birla" };
 const iip = {
   src: "/about/logos/Indian_Institute_of_Packaging_Logo.svg",
   alt: "Indian Institute of Packaging",
-  caption: "IIP Mumbai",
+  caption: "Indian Institute of Packaging\nMumbai",
 };
 
 export const team = [
@@ -38,20 +39,21 @@ export const team = [
     roleIcon: "cog" as const,
     photo: "/about/team/paul.jpg",
     linkedin: "https://www.linkedin.com/in/paul-e-prakash-95975310",
-    summary: "4 decades of experience, 25 years as Head of Packaging.",
-    sectors: "FMCG | Food | Personal care | Chemicals",
-    companies: "Marico | Reliance | Dabur | Pidilite",
+    summary: "4 decades of experience, 25 years as Head of Packaging",
+    sectors: "Machinery | FMCG | Food | Personal Care | Chemicals",
+    companies: "Marico | Reliance | Dabur | Pidilite | Empress Tin | Mechelonic | Vidyut Metallics | Petrosil Oil",
     companyLogos: [
       marico,
       { src: "/about/logos/reliance.jpg", alt: "Reliance Retail" },
       { src: "/about/logos/dabur.png", alt: "Dabur" },
       { src: "/about/logos/pidilite.png", alt: "Pidilite" },
     ],
-    credential: "B.E. (Manipal Inst of Tech.), M.M.M.",
+    experienceNote: "Empress Tin | Mechelonic\nVidyut Metallics\nPetrosil Oil",
+    credential: "B.E. (I&P) (Manipal Inst of Tech.) M.M.M.",
     education: {
       src: "/about/logos/manipal uni.webp",
       alt: "Manipal Academy of Higher Education",
-      caption: "B.E. (Manipal Inst of Tech.), M.M.M.",
+      caption: "B.E. (I&P) (Manipal Inst of Tech.)\nM.M.M.",
     },
   },
   {
@@ -63,11 +65,12 @@ export const team = [
     roleIcon: "flask" as const,
     photo: "/about/team/prakash.jpg",
     linkedin: "https://www.linkedin.com/in/krishnaprakash-iyer-17228813",
-    summary: "End-to-end packaging R&D expertise.",
+    summary: "End-to-end packaging R&D expertise",
     sectors: "FMCG | Devices | Cosmetics | Hospitality",
     companies: "Marico | Unilever (India, China, UK)",
     companyLogos: [marico, { src: "/about/logos/unilever.webp", alt: "Unilever" }],
-    credential: "IIP Mumbai",
+    experienceNote: "Unilever: India, China, UK",
+    credential: "Indian Institute of Packaging Mumbai",
     education: iip,
   },
   {
@@ -79,16 +82,17 @@ export const team = [
     roleIcon: "leaf" as const,
     photo: "/about/team/barun.jpg",
     linkedin: "https://www.linkedin.com/in/barunbanerjee",
-    summary: "Packaging development E2E, Sustainability, Flexibles.",
+    summary: "Packaging Development & Sustainability",
     sectors: "FMCG | Cosmetics | Pharma",
-    companies: "Nestlé | Himalaya | Oriflame | Ranbaxy",
+    companies: "Nestlé | Oriflame | Ranbaxy | Himalaya",
     companyLogos: [
       { src: "/about/logos/nestle.svg", alt: "Nestlé" },
-      { src: "/about/logos/The_Himalaya_Drug_Company_logo.svg.webp", alt: "Himalaya" },
       { src: "/about/logos/oriflame.png", alt: "Oriflame" },
       { src: "/about/logos/ranbaxy.png", alt: "Ranbaxy" },
+      { src: "/about/logos/The_Himalaya_Drug_Company_logo.svg.webp", alt: "Himalaya" },
     ],
-    credential: "IIP Mumbai",
+    experienceNote: "Nestle R&D: India, South Asia, Singapore.",
+    credential: "Indian Institute of Packaging Mumbai",
     education: iip,
   },
   {
@@ -100,12 +104,12 @@ export const team = [
     roleIcon: "hexagon" as const,
     photo: "/about/team/ashutosh.jpg",
     linkedin: "https://www.linkedin.com/in/ashutoshanmadwar",
-    summary: "Moulds, Polymers, Audits & Cosmetics.",
-    sectors: "FMCG | Beauty | Retail",
-    companies: "Marico | Aditya Birla",
-    companyLogos: [marico, adityaBirla],
+    summary: "Packaging Development, Moulds, Plastics & Operational Excellence",
+    sectors: "FMCG | Personal & Home care | Retail | Manufacturing",
+    companies: "Marico | Aditya Birla | Golden Era",
+    companyLogos: [marico, adityaBirla, { src: "/about/logos/golden-era.png", alt: "Golden Era Group of Companies" }],
     credential: "CIPET Chennai",
-    education: { src: "/about/logos/cipet.jpg", alt: "CIPET", caption: "CIPET Chennai" },
+    education: { src: "/about/logos/cipet.jpg", alt: "CIPET", caption: "Chennai", kicker: "C I P E T" },
   },
   {
     name: "Anees Cementwala",
@@ -116,20 +120,21 @@ export const team = [
     roleIcon: "pen" as const,
     photo: "/about/team/anees.jpg",
     linkedin: "https://www.linkedin.com/in/aneescementwala",
-    summary: "Consumer-centric Design and Innovation.",
-    sectors: "Design | Research | Branding | Retail",
+    summary: "Consumer-centric Design and Innovation",
+    sectors: "Design | Research | Branding | Retail | Media",
     companies: "Marico | Aditya Birla | Atlas | Times of India",
     companyLogos: [
       marico,
       adityaBirla,
-      { src: "/about/logos/atlas skilltech uni.png", alt: "Atlas SkillTech University" },
       { src: "/about/logos/the-times-of-india.png", alt: "The Times of India" },
+      { src: "/about/logos/atlas skilltech uni.png", alt: "Atlas SkillTech University" },
     ],
     credential: "IIT Bombay",
     education: {
       src: "/about/logos/Indian_Institute_of_Technology_Bombay_Logo.webp",
       alt: "Indian Institute of Technology Bombay",
-      caption: "IIT Bombay",
+      caption: "Indian Institute of Technology Bombay",
+      kicker: "Product Designer + Architect",
       dark: true,
     },
   },
@@ -339,10 +344,10 @@ export const testimonials = [
     role: "COO at a Leading Beverage Co",
   },
   {
-    title: "Urgent & expert technical support during a crisis",
+    title: "A partner we can rely on in complex and critical situations",
     quote:
-      "When a major production line failure threatened to halt our holiday shipments, their team responded instantly with expert technical support. They quickly diagnosed the structural defect and guided our suppliers through an immediate, viable fix. Their calm professionalism and rapid troubleshooting saved us from a massive distribution disaster.",
-    role: "Head R&D at a Global beauty conglomerate",
+      "Over the past year, MONOFIX has become a valuable extension of our R&D and Quality teams, combining deep technical expertise with practical execution, helping resolve complex challenges on the ground across multiple countries, through both their experience and extensive network. What sets MONOFIX apart is their ability to… consistently bring solutions, not just recommendations.",
+    role: "Kuvendren Pillay, Sr. R&D Director EVERMARK",
   },
 ];
 
