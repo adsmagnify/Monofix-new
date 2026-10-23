@@ -3,10 +3,14 @@ export const site = {
   legalName: "MONOFIX Solutions LLP",
   tagline: "Innovative Packaging Solutions that mean Business !!",
   hashtags: ["Packaging", "Innovation", "Sustainability"],
-  email: "Sales@monofix.co.in",
-  emails: ["Sales@monofix.co.in", "anees.cementwala@monofix.co.in"],
-  phone: "+91-9820026080",
+  email: "anees.cementwala@monofix.co.in",
+  emails: ["anees.cementwala@monofix.co.in", "barun.banerjee@monofix.co.in"],
+  phone: "9820026080",
   phoneHref: "tel:+919820026080",
+  phones: [
+    { label: "9820026080", href: "tel:+919820026080" },
+    { label: "9871165436", href: "tel:+919871165436" },
+  ],
   linkedin: "https://www.linkedin.com/company/monofix-packaging-solutions/",
   responseTime: "Get in touch… we respond within 24 hours, or earlier.",
   address: {

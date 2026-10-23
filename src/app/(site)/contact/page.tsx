@@ -36,9 +36,14 @@ export default function ContactPage() {
                 <br />
               </span>
             ))}
-            <a className="font-semibold text-navy" href={site.phoneHref}>
-              {site.phone}
-            </a>
+            {site.phones.map((phone) => (
+              <span key={phone.href}>
+                <a className="font-semibold text-navy" href={phone.href}>
+                  {phone.label}
+                </a>
+                <br />
+              </span>
+            ))}
           </p>
           <p className="text-lg">
             <a className="font-semibold text-navy" href={site.linkedin} target="_blank" rel="noopener noreferrer">

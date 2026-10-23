@@ -151,9 +151,13 @@ export function HomeSections() {
             </div>
             <div className="rounded-2xl bg-white px-5 py-5">
               <p className="text-xs font-semibold tracking-wide text-navy uppercase">Mobile</p>
-              <a className="mt-2 block text-sm text-navy" href={site.phoneHref}>
-                {site.phone}
-              </a>
+              <div className="mt-2 space-y-1">
+                {site.phones.map((phone) => (
+                  <a key={phone.href} className="block text-sm text-navy" href={phone.href}>
+                    {phone.label}
+                  </a>
+                ))}
+              </div>
             </div>
             <div className="rounded-2xl bg-white px-5 py-5">
               <p className="text-xs font-semibold tracking-wide text-navy uppercase">LinkedIn</p>

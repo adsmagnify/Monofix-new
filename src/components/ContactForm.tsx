@@ -35,7 +35,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     ] 
       .filter(Boolean)
       .join("\n");
-    const href = `mailto:${site.email}?subject=${encodeURIComponent(
+    const href = `mailto:${site.emails[0]}?cc=${encodeURIComponent(site.emails[1] ?? "")}&subject=${encodeURIComponent(
       `Website enquiry — ${service || "MONOFIX"}`,
     )}&body=${encodeURIComponent(body)}`;
     window.location.href = href;
@@ -45,7 +45,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   if (sent) {
     return (
       <p className="rounded-2xl bg-mist p-6 text-navy">
-        Thank you. Your mail client should open with the message for {site.email}. We respond within 24 hours, or earlier.
+        Thank you. Your mail client should open with the message for {site.emails.join(" and ")}. We respond within 24 hours, or earlier.
       </p>
     );
   }

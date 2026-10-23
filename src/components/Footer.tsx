@@ -99,32 +99,11 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-2 px-6 py-6 text-sm text-white/40 sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-16">
-          <p>
-            © {new Date().getFullYear()} {site.legalName} · GST {site.gst}
-          </p>
-          <p className="flex flex-col gap-1 sm:block">
-            {site.emails.map((email, i) => (
-              <span key={email}>
-                {i > 0 ? <span className="hidden sm:inline"> · </span> : null}
-                <a href={`mailto:${email}`} className="break-all hover:text-lime">
-                  {email}
-                </a>
-              </span>
-            ))}
-            <span>
-              <span className="hidden sm:inline"> · </span>
-              {site.phone} ·{" "}
-              <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-lime">
-                LinkedIn
-              </a>
-            </span>
-          </p>
+        <div className="mx-auto max-w-[1400px] px-6 py-6 text-sm text-white/40 sm:px-10 lg:px-16">
           <p>
             Created by{" "}
             <a href="https://adsmagnify.com" target="_blank" rel="noopener noreferrer" className="hover:text-lime">
-              AdsMagnify
-            </a>
+              AdsMagnify</a>.
           </p>
         </div>
       </div>
