@@ -76,7 +76,7 @@ export function HomeSections() {
         <SustainabilityCards tone="onLime" />
       </Section>
 
-      <Section id="testimonials" hug className="bg-white" bottom={<LogoTicker />}>
+      <Section id="testimonials" className="bg-white" bottom={<LogoTicker />}>
         <SectionHead
           kicker="Client testimonials"
           title={

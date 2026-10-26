@@ -12,8 +12,8 @@ export function LogoTicker({ names = clientNames }: LogoTickerProps) {
   if (items.length === 0) return null;
 
   return (
-    <div className="bg-navy" aria-label="Clients">
-      <div className="relative overflow-hidden py-5">
+    <div className="mt-auto bg-white" aria-label="Clients">
+      <div className="relative overflow-hidden py-7 sm:py-8">
         <div
           className={`logo-ticker-track flex w-max ${GAP}`}
           style={{ "--ticker-duration": "42s" } as CSSProperties}
@@ -38,9 +38,9 @@ function TickerRow({
       {names.map((name, index) => (
         <li
           key={`${decorative ? "b" : "a"}-${name}-${index}`}
-          className="flex h-14 w-[14.5rem] shrink-0 items-center justify-center rounded-xl bg-white px-4 sm:h-16"
+          className="flex h-16 w-[16.5rem] shrink-0 items-center justify-center px-4 sm:h-[4.5rem] sm:w-[18rem]"
         >
-          <span className="whitespace-nowrap text-[13px] font-bold tracking-[0.02em] text-navy sm:text-sm">
+          <span className="whitespace-nowrap text-base font-bold tracking-[0.02em] text-navy sm:text-lg">
             {name}
           </span>
         </li>
