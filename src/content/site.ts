@@ -342,24 +342,28 @@ export const sustainabilityPoints = [
 
 export const testimonials = [
   {
-    title: "Great new packaging design shape",
-    quote:
-      "The custom packaging shape developed by the MONOFIX team completely transformed our product's shelf presence and brand identity. Not only does it look stunning and modern, but the structural integrity is also outstanding. Our customers have noticed the upgrade, and our sales have seen a fantastic lift because of it.",
-    role: "CMO at a Coffee major",
-  },
-  {
-    title: "Major cost savings end-to-end",
-    quote:
-      "We brought in MONOFIX to audit our supply chain, and they delivered phenomenal end-to-end cost savings without compromising on quality. From material optimization to smarter pallet layouts, every adjustment they made improved our bottom line. They didn't just find quick fixes; they restructured our packaging efficiency for the long run.",
-    role: "COO at a Leading Beverage Co",
-  },
-  {
     title: "A partner we can rely on in complex and critical situations",
     quote:
       "Over the past year, MONOFIX has become a valuable extension of our R&D and Quality teams, combining deep technical expertise with practical execution, helping resolve complex challenges on the ground across multiple countries, through both their experience and extensive network. What sets MONOFIX apart is their ability to… consistently bring solutions, not just recommendations.",
     role: "Kuvendren Pillay, Sr. R&D Director EVERMARK",
   },
 ];
+
+/** Client names for the testimonials ticker. Text only — no logos. */
+export const clientNames = [
+  "Elida Beauty",
+  "Suave Brands",
+  "DCM Shriram",
+  "Pernod Ricard",
+  "Continental Coffee",
+  "Dhampur Bio-Organics",
+  "Evermark",
+  "Vestacy",
+  "Unilever",
+  "Marico",
+  "Purplle",
+  "Gulf Oil",
+] as const;
 
 export const insightTopics = [
   {
@@ -400,13 +404,16 @@ export const priceFeeds = [
 ];
 
 export const caseStudies = [
-  { title: "End-to-end delivery of PC products (U)", area: "NPD" },
-  { title: "Cost savings — Bkk case study", area: "Value engineering" },
-  { title: "Audit / quality — Egypt example", area: "Audit & quality" },
-  { title: "Sustainability — Europe PPWR example", area: "Sustainability" },
-  { title: "Resource augmentation — AlcoBev USA, cosmetics", area: "Resourcing" },
-  { title: "Cartons optimisation — beauty portfolio", area: "Secondary pack" },
-  { title: "Sugar operations GMP", area: "Quality" },
+  { title: "Packaging Innovation", area: "AUTOMOBILES" },
+  { title: "Kraft Maximisation", area: "CARTONS" },
+  { title: "Enhanced Efficiency", area: "SUGAR" },
+  { title: "Expert Recommendation", area: "BATHING BARS" },
+  { title: "Project Management", area: "END-TO-END PACKAGING" },
+  { title: "Vendor Selection & Qualification", area: "PET BOTTLE MOULD" },
+  { title: "Boots-on-the-Ground Support in the Factory", area: "STICK PACK" },
+  { title: "On-Site Support to Manage Peaks", area: "RESOURCING" },
+  { title: "Design Optimisation & Print Support", area: "ARTWORKS" },
+  { title: "Business Expansion", area: "LUG CAPS" },
 ];
 
 export const popup = {

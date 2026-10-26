@@ -9,7 +9,7 @@ import { PriceTiles } from "@/components/PriceTiles";
 import { ServiceCards } from "@/components/ServiceCards";
 import { SustainabilityCards } from "@/components/SustainabilityCards";
 import { TestimonialCards } from "@/components/TestimonialCards";
-// import { LogoTicker } from "@/components/LogoTicker";
+import { LogoTicker } from "@/components/LogoTicker";
 import { GalleryCards } from "@/components/GalleryCards";
 import { TeamPeopleList } from "@/components/TeamGrid";
 import { site, teamLead } from "@/content/site";
@@ -76,8 +76,7 @@ export function HomeSections() {
         <SustainabilityCards tone="onLime" />
       </Section>
 
-      {/* Restore when client logos are ready: hug className="bg-white" bottom={<LogoTicker />} */}
-      <Section id="testimonials" className="bg-white">
+      <Section id="testimonials" hug className="bg-white" bottom={<LogoTicker />}>
         <SectionHead
           kicker="Client testimonials"
           title={

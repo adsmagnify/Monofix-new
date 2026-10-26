@@ -59,6 +59,15 @@ export async function PriceTiles() {
         >
           OfBusiness
         </a>
+        {" · "}
+        <a
+          href="https://www.price-watch.ai/kraft-paper-prices/#pricing"
+          target="_blank"
+          rel="noreferrer"
+          className="text-lime underline-offset-2 hover:underline"
+        >
+          Price Watch
+        </a>
       </p>
     </div>
   );

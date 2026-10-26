@@ -30,7 +30,7 @@ const PRICE_SOURCES: Record<string, string> = {
   PET: "https://plastic4trade.com/polymer-price-today-update-list-graph",
   HDPE: "https://www.ofbusiness.com/prices/polymers-packaging/hdpe",
   PP: "https://www.ofbusiness.com/prices/polymers-packaging",
-  Kraft: "https://www.ofbusiness.com/prices/polymers-packaging",
+  Kraft: "https://www.price-watch.ai/kraft-paper-prices/#pricing",
 };
 
 function withPriceSource(item: PriceItem): PriceItem {

@@ -2,12 +2,15 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { services, site } from "@/content/site";
+import { services } from "@/content/site";
+
+type Status = "idle" | "sending" | "sent" | "error";
 
 export function ContactForm({ compact = false }: { compact?: boolean }) {
   const params = useSearchParams();
   const region = params.get("region");
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
 
   const regionNote = useMemo(() => {
     if (region === "usa") return "Enquiry from USA / North America desk.";
@@ -15,38 +18,58 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     return "";
   }, [region]);
 
- 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") || "");
-    const email = String(data.get("email") || "");
-    const company = String(data.get("company") || "");
-    const service = String(data.get("service") || "");
-    const message = String(data.get("message") || "");
-    const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Company: ${company}`,
-      `Service interest: ${service}`,
-      regionNote ? `Region: ${regionNote}` : "",
-      "",
-      message,
-    ] 
-      .filter(Boolean)
-      .join("\n");
-    const href = `mailto:${site.emails[0]}?cc=${encodeURIComponent(site.emails[1] ?? "")}&subject=${encodeURIComponent(
-      `Website enquiry — ${service || "MONOFIX"}`,
-    )}&body=${encodeURIComponent(body)}`;
-    window.location.href = href;
-    setSent(true);
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    setStatus("sending");
+    setError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(data.get("name") || ""),
+          email: String(data.get("email") || ""),
+          company: String(data.get("company") || ""),
+          service: String(data.get("service") || ""),
+          message: String(data.get("message") || ""),
+          region: regionNote,
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(payload?.error || "Could not send the message.");
+      }
+      form.reset();
+      setStatus("sent");
+    } catch (err) {
+      setStatus("error");
+      setError(err instanceof Error ? err.message : "Could not send the message.");
+    }
   }
 
-  if (sent) {
+  if (status === "sent") {
     return (
-      <p className="rounded-2xl bg-mist p-6 text-navy">
-        Thank you. Your mail client should open with the message for {site.emails.join(" and ")}. We respond within 24 hours, or earlier.
-      </p>
+      <div
+        className={`flex h-full min-h-[18rem] flex-col justify-center rounded-2xl bg-navy text-white ${
+          compact ? "px-6 py-8 sm:px-8" : "px-8 py-10 sm:px-10"
+        }`}
+      >
+        <p className="text-[10px] font-semibold tracking-[0.28em] text-lime uppercase">Message sent</p>
+        <h3 className="font-display mt-3 text-3xl leading-tight sm:text-4xl">Thank you.</h3>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-white/75 sm:text-base">
+          We’ve received your enquiry. The MONOFIX team will get back within 24 hours, or earlier.
+        </p>
+        <button
+          type="button"
+          onClick={() => setStatus("idle")}
+          className="mt-6 w-fit cursor-pointer rounded-full bg-lime px-5 py-2.5 text-sm font-bold text-ink hover:bg-white"
+        >
+          Send another message
+        </button>
+      </div>
     );
   }
 
@@ -92,13 +115,15 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         Message
         <textarea name="message" required rows={compact ? 4 : 5} className={field} />
       </label>
+      {status === "error" ? <p className="text-sm font-medium text-pink">{error}</p> : null}
       <button
         type="submit"
-        className={`cursor-pointer rounded-full bg-ink font-bold text-white hover:bg-navy ${
+        disabled={status === "sending"}
+        className={`cursor-pointer rounded-full bg-ink font-bold text-white hover:bg-navy disabled:cursor-wait disabled:opacity-70 ${
           compact ? "mt-1 px-8 py-3.5 text-base" : "mt-2 px-8 py-4 text-base"
         }`}
       >
-        Send message
+        {status === "sending" ? "Sending…" : "Send message"}
       </button>
     </form>
   );

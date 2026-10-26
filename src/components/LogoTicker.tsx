@@ -1,28 +1,25 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
-
-type Logo = {
-  src: string;
-  alt: string;
-};
+import { clientNames } from "@/content/site";
 
 type LogoTickerProps = {
-  logos?: Logo[];
+  names?: readonly string[];
 };
 
-const BLANK_SLOTS = 8;
+const GAP = "gap-5 sm:gap-6";
 
-export function LogoTicker({ logos = [] }: LogoTickerProps) {
-  const slots: Array<Logo | null> = logos.length
-    ? logos
-    : Array.from({ length: BLANK_SLOTS }, () => null);
+export function LogoTicker({ names = clientNames }: LogoTickerProps) {
+  const items = names.length ? [...names] : [];
+  if (items.length === 0) return null;
 
   return (
-    <div className="bg-navy" aria-label="Client logos">
+    <div className="bg-navy" aria-label="Clients">
       <div className="relative overflow-hidden py-5">
-        <div className="logo-ticker-track flex w-max" style={{ "--ticker-duration": "42s" } as CSSProperties}>
-          <TickerRow slots={slots} />
-          <TickerRow slots={slots} decorative />
+        <div
+          className={`logo-ticker-track flex w-max ${GAP}`}
+          style={{ "--ticker-duration": "42s" } as CSSProperties}
+        >
+          <TickerRow names={items} />
+          <TickerRow names={items} decorative />
         </div>
       </div>
     </div>
@@ -30,31 +27,22 @@ export function LogoTicker({ logos = [] }: LogoTickerProps) {
 }
 
 function TickerRow({
-  slots,
+  names,
   decorative = false,
 }: {
-  slots: Array<Logo | null>;
+  names: string[];
   decorative?: boolean;
 }) {
   return (
-    <ul
-      className="flex items-center gap-5 px-5 sm:gap-7 sm:px-7"
-      aria-hidden={decorative || undefined}
-    >
-      {slots.map((logo, index) => (
+    <ul className={`flex items-center ${GAP}`} aria-hidden={decorative || undefined}>
+      {names.map((name, index) => (
         <li
-          key={`${decorative ? "b" : "a"}-${logo?.src ?? "blank"}-${index}`}
-          className="flex h-14 w-[148px] shrink-0 items-center justify-center rounded-xl bg-white sm:h-16 sm:w-[168px]"
+          key={`${decorative ? "b" : "a"}-${name}-${index}`}
+          className="flex h-14 w-[14.5rem] shrink-0 items-center justify-center rounded-xl bg-white px-4 sm:h-16"
         >
-          {logo ? (
-            <Image
-              src={logo.src}
-              alt={decorative ? "" : logo.alt}
-              width={120}
-              height={36}
-              className="max-h-9 w-auto object-contain"
-            />
-          ) : null}
+          <span className="whitespace-nowrap text-[13px] font-bold tracking-[0.02em] text-navy sm:text-sm">
+            {name}
+          </span>
         </li>
       ))}
     </ul>

@@ -1,79 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import {
-  BadgePercent,
-  ClipboardCheck,
-  Layers,
-  Package,
-  Recycle,
-  ShieldCheck,
-  Users,
-  type LucideIcon,
-} from "lucide-react";
 import { useCallback, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
-import type { CaseAccent, CaseStudy } from "@/lib/casestudies";
-
-const icons: Record<string, LucideIcon> = {
-  "pc-products": Package,
-  "bkk-cost": BadgePercent,
-  "egypt-audit": ClipboardCheck,
-  "europe-ppwr": Recycle,
-  "alcobev-resource": Users,
-  "beauty-cartons": Layers,
-  "sugar-gmp": ShieldCheck,
-};
-
-const accents: Record<
-  CaseAccent,
-  {
-    tile: string;
-    number: string;
-    lightNumber: string;
-    bar: string;
-    darkCard: string;
-    lightCard: string;
-    pill: string;
-  }
-> = {
-  lime: {
-    tile: "bg-lime text-ink",
-    number: "text-lime",
-    lightNumber: "text-navy",
-    bar: "bg-lime",
-    darkCard: "bg-lime/15 border-lime/45 hover:bg-lime/25",
-    lightCard: "border-lime hover:bg-lime/15",
-    pill: "bg-lime text-ink",
-  },
-  blue: {
-    tile: "bg-blue text-white",
-    number: "text-blue",
-    lightNumber: "text-blue",
-    bar: "bg-blue",
-    darkCard: "bg-blue/15 border-blue/45 hover:bg-blue/25",
-    lightCard: "border-blue/40 hover:bg-blue/[0.04]",
-    pill: "bg-blue text-white",
-  },
-  pink: {
-    tile: "bg-pink text-white",
-    number: "text-pink",
-    lightNumber: "text-pink",
-    bar: "bg-pink",
-    darkCard: "bg-pink/15 border-pink/45 hover:bg-pink/25",
-    lightCard: "border-pink/40 hover:bg-pink/[0.04]",
-    pill: "bg-pink text-white",
-  },
-  navy: {
-    tile: "bg-navy text-lime",
-    number: "text-white",
-    lightNumber: "text-navy",
-    bar: "bg-white",
-    darkCard: "bg-white/10 border-white/35 hover:bg-white/15",
-    lightCard: "border-navy/25 hover:bg-navy/[0.04]",
-    pill: "bg-navy text-lime",
-  },
-};
+import { caseVisuals, type CaseStudy } from "@/lib/casestudies";
 
 function CloseIcon() {
   return (
@@ -112,7 +42,12 @@ function Lightbox({
 }) {
   const item = items[index];
   const titleId = useId();
-  const image = item?.image?.trim();
+  const visuals = item ? caseVisuals(item) : [];
+  const [slide, setSlide] = useState(0);
+
+  useEffect(() => {
+    setSlide(0);
+  }, [index]);
 
   useEffect(() => {
     const previous = document.body.style.overflow;
@@ -133,6 +68,7 @@ function Lightbox({
   }, [onClose, onPrev, onNext]);
 
   if (!item) return null;
+  const src = visuals[slide] ?? visuals[0];
 
   return createPortal(
     <div
@@ -179,24 +115,47 @@ function Lightbox({
       ) : null}
 
       <figure
-        className="flex max-h-full w-full max-w-4xl flex-col items-center overflow-y-auto"
+        className="grid max-h-full w-full max-w-6xl overflow-y-auto rounded-3xl bg-navy text-white lg:grid-cols-[1.15fr_0.85fr]"
         onClick={(event) => event.stopPropagation()}
       >
-        {image ? (
-          <div className="relative w-full overflow-hidden rounded-2xl bg-navy">
-            <div className="relative mx-auto aspect-[16/9] max-h-[52vh] w-full">
-              <Image src={image} alt={item.title} fill className="object-contain" sizes="(min-width: 1024px) 56rem, 100vw" priority />
+        <div className="min-w-0">
+          {src ? (
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-ink">
+              <Image
+                src={src}
+                alt={item.title}
+                fill
+                className="object-cover object-center"
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                priority
+              />
             </div>
-          </div>
-        ) : null}
-        <figcaption className="mt-4 w-full max-w-3xl rounded-2xl bg-navy px-6 py-8 text-center text-white sm:px-10">
-          <p className="text-[10px] font-semibold tracking-[0.22em] text-lime uppercase">
-            {item.area} · {index + 1} / {items.length}
-          </p>
-          <h3 id={titleId} className="font-display mt-2 text-2xl leading-tight sm:text-3xl">
+          ) : null}
+          {item.caption ? (
+            <div className="px-5 py-4 sm:px-6">
+              {item.resultLabel ? (
+                <p className="text-[10px] font-semibold tracking-[0.22em] text-lime uppercase">{item.resultLabel}</p>
+              ) : null}
+              <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-white/80 sm:text-[15px]">{item.caption}</p>
+            </div>
+          ) : null}
+        </div>
+        <figcaption className="flex flex-col justify-center px-6 py-6 sm:px-8 sm:py-8">
+          <p className="text-[10px] font-semibold tracking-[0.22em] text-lime uppercase">{item.area}</p>
+          <h3 id={titleId} className="font-display mt-3 text-2xl leading-tight sm:text-[2rem]">
             {item.title}
           </h3>
-          {item.detail ? <p className="mt-3 text-sm leading-relaxed text-white/80 sm:text-base">{item.detail}</p> : null}
+          {item.lead ? <p className="mt-3 text-sm font-medium text-lime sm:text-base">{item.lead}</p> : null}
+          {item.detail ? (
+            <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-white/80 sm:text-[15px]">{item.detail}</p>
+          ) : null}
+          {item.timeline ? (
+            <div className="mt-6">
+              <p className="text-[10px] font-semibold tracking-[0.22em] text-lime uppercase">TIMELINE</p>
+              <p className="mt-1 text-sm text-white/90">{item.timeline}</p>
+              {item.timelineNote ? <p className="text-sm text-white/70">{item.timelineNote}</p> : null}
+            </div>
+          ) : null}
         </figcaption>
       </figure>
     </div>,
@@ -204,54 +163,8 @@ function Lightbox({
   );
 }
 
-function CardInner({ item, index, dark, onPink }: { item: CaseStudy; index: number; dark: boolean; onPink: boolean }) {
-  const highlighted = Boolean(item.highlight);
-  const visual = accents[item.accent ?? "lime"];
-  const Icon = icons[item.id] ?? Package;
-  const image = item.image?.trim();
-
-  return (
-    <>
-      <span className={`absolute inset-x-0 top-0 h-1.5 ${highlighted ? "bg-ink" : visual.bar}`} aria-hidden="true" />
-      {image ? (
-        <div className="relative h-28 w-full overflow-hidden rounded-xl sm:h-16 sm:w-20 sm:shrink-0">
-          <Image src={image} alt="" fill className="object-cover" sizes="160px" />
-        </div>
-      ) : null}
-      <span
-        className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-          highlighted ? "bg-ink text-lime" : visual.tile
-        }`}
-        aria-hidden="true"
-      >
-        <Icon className="h-5 w-5" strokeWidth={2} />
-      </span>
-      <div className="min-w-0 flex-1 text-left">
-        <p
-          className={`font-display text-sm tracking-wide ${
-            highlighted ? "text-ink/70" : dark ? visual.number : visual.lightNumber
-          }`}
-        >
-          {highlighted ? "Featured" : String(index + 1).padStart(2, "0")}
-        </p>
-        <h3 className={`font-display mt-1 text-lg leading-snug sm:text-xl ${highlighted || !dark ? "text-ink" : "text-white"}`}>
-          {item.title}
-        </h3>
-      </div>
-      <span
-        className={`shrink-0 rounded-full px-3 py-1 text-[10px] font-bold tracking-wide uppercase ${
-          highlighted ? "bg-ink text-lime" : onPink && item.accent === "pink" ? "bg-navy text-lime" : visual.pill
-        }`}
-      >
-        {item.area}
-      </span>
-    </>
-  );
-}
-
 export function CaseStudyGrid({ items, tone = "dark" }: { items: CaseStudy[]; tone?: "dark" | "light" | "onPink" }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const dark = tone === "dark";
   const onPink = tone === "onPink";
 
   const close = useCallback(() => setOpenIndex(null), []);
@@ -266,29 +179,33 @@ export function CaseStudyGrid({ items, tone = "dark" }: { items: CaseStudy[]; to
 
   return (
     <>
-      <div className="mt-10 grid gap-3 sm:grid-cols-2">
+      <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
         {items.map((item, index) => {
-          const highlighted = Boolean(item.highlight);
-          const visual = accents[item.accent ?? "lime"];
-          const className = `relative flex w-full cursor-pointer flex-wrap items-center gap-4 overflow-hidden rounded-2xl border px-5 py-5 pt-7 text-left transition-colors duration-200 ${
-            highlighted
-              ? "border-lime bg-lime"
-              : onPink
-                ? "border-ink/20 bg-white shadow-[0_12px_28px_rgba(7,21,31,0.12)] hover:border-ink/35"
-                : dark
-                  ? visual.darkCard
-                  : `bg-white ${visual.lightCard}`
-          }`;
-
+          const thumb = caseVisuals(item)[0];
           return (
             <button
               key={item.id}
               type="button"
               onClick={() => setOpenIndex(index)}
-              className={className}
+              className={`overflow-hidden rounded-2xl text-left transition hover:-translate-y-0.5 ${
+                onPink
+                  ? "bg-white shadow-[0_10px_22px_rgba(7,21,31,0.12)] hover:shadow-[0_14px_28px_rgba(7,21,31,0.16)]"
+                  : "bg-white shadow-[0_8px_18px_rgba(7,21,31,0.08)]"
+              }`}
               aria-label={`View case study: ${item.title}`}
             >
-              <CardInner item={item} index={index} dark={dark} onPink={onPink} />
+              <div className="relative aspect-[16/9] bg-navy">
+                {thumb ? (
+                  <Image src={thumb} alt="" fill className="object-cover" sizes="(min-width: 1280px) 18vw, (min-width: 768px) 30vw, 50vw" />
+                ) : null}
+                <span className="absolute top-2 left-2 rounded-full bg-ink/70 px-2 py-0.5 text-[10px] font-bold tracking-wide text-lime">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <div className="px-3 py-3">
+                <p className="text-[10px] font-semibold tracking-[0.18em] text-blue uppercase">{item.area}</p>
+                <h3 className="font-display mt-1 line-clamp-2 text-sm leading-snug text-ink sm:text-base">{item.title}</h3>
+              </div>
             </button>
           );
         })}
