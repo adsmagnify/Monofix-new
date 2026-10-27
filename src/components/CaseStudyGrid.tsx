@@ -125,6 +125,7 @@ function Lightbox({
                 src={src}
                 alt={item.title}
                 fill
+                unoptimized
                 className="object-cover object-center"
                 sizes="(min-width: 1024px) 40vw, 100vw"
                 priority
@@ -196,7 +197,14 @@ export function CaseStudyGrid({ items, tone = "dark" }: { items: CaseStudy[]; to
             >
               <div className="relative aspect-[16/9] bg-navy">
                 {thumb ? (
-                  <Image src={thumb} alt="" fill className="object-cover" sizes="(min-width: 1280px) 18vw, (min-width: 768px) 30vw, 50vw" />
+                  <Image
+                    src={thumb}
+                    alt=""
+                    fill
+                    unoptimized
+                    className="object-cover"
+                    sizes="(min-width: 1280px) 18vw, (min-width: 768px) 30vw, 50vw"
+                  />
                 ) : null}
                 <span className="absolute top-2 left-2 rounded-full bg-ink/70 px-2 py-0.5 text-[10px] font-bold tracking-wide text-lime">
                   {String(index + 1).padStart(2, "0")}
