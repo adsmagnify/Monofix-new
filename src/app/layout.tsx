@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Figtree, Syne, Geist } from "next/font/google";
+import Script from "next/script";
 import { site } from "@/content/site";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+
+const GTM_ID = "GTM-W3T6LRTJ";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -58,6 +61,23 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", figtree.variable, geist.variable)}>
       <body className={`${figtree.variable} ${syne.variable} antialiased`}>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          `}
+        </Script>
+        <Script src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`} strategy="afterInteractive" />
         {children}
       </body>
     </html>
