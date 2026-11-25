@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 const GTM_ID = "GTM-W3T6LRTJ";
 const GA_MEASUREMENT_ID = "G-2TNNMVW6WL";
+const CLARITY_ID = "zj2xffot0z";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -81,6 +82,15 @@ export default function RootLayout({
           `}
         </Script>
         <Script src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`} strategy="afterInteractive" />
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${CLARITY_ID}");
+          `}
+        </Script>
         {children}
       </body>
     </html>
