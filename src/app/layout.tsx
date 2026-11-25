@@ -6,6 +6,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 
 const GTM_ID = "GTM-W3T6LRTJ";
+const GA_MEASUREMENT_ID = "G-2TNNMVW6WL";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -70,11 +71,13 @@ export default function RootLayout({
             title="Google Tag Manager"
           />
         </noscript>
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
         <Script src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`} strategy="afterInteractive" />
